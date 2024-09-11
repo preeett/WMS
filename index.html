@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -70,20 +70,6 @@
             margin: 10px 0;
             font-size: 1.4rem;
             color: #58a6ff;
-        }
-
-        /* Updated Image Style */
-        .astro-card img {
-            width: 100px;
-            height: 100px;
-            margin-bottom: 15px;
-            transition: transform 0.3s ease-in-out;
-        }
-
-        .astro-card:hover img {
-            transform: rotate(360deg);
-            box-shadow: 0 0 20px #58a6ff;
-            border-radius: 50%;
         }
 
         /* Sensor Information Section */
@@ -185,7 +171,6 @@
             </div>
 
             <div class="astro-card">
-                <img id="moon-phase-img" src="https://via.placeholder.com/200" alt="Moon Phase Image" style="width: 100px; height: 100px;">
                 <h4>Moon Phase</h4>
                 <p id="moon-phase">Loading...</p>
             </div>
@@ -245,42 +230,6 @@
             document.getElementById('moon-distance').innerHTML = `Distance: ${moonDistance}`;
             document.getElementById('moon-rise').innerHTML = `Moonrise: ${moonriseTime}`;
             document.getElementById('moon-set').innerHTML = `Moonset: ${moonsetTime}`;
-
-            // Display moon phase image based on moon phase
-            const moonPhaseImgElement = document.getElementById('moon-phase-img');
-            let moonImagePath;
-
-            switch (moonPhase.toLowerCase()) {
-                case 'new moon':
-                    moonImagePath = 'C:/Users/Preet/Desktop/moon images/new_moon.png';
-                    break;
-                case 'waxing crescent':
-                    moonImagePath = 'C:/Users/Preet/Desktop/moon images/waxing_crescent.png';
-                    break;
-                case 'first quarter':
-                    moonImagePath = 'C:/Users/Preet/Desktop/moon images/first_quarter.png';
-                    break;
-                case 'waxing gibbous':
-                    moonImagePath = 'C:/Users/Preet/Desktop/moon images/waxing_gibbous.png';
-                    break;
-                case 'full moon':
-                    moonImagePath = 'C:/Users/Preet/Desktop/moon images/full_moon.png';
-                    break;
-                case 'waning gibbous':
-                    moonImagePath = 'C:/Users/Preet/Desktop/moon images/waning_gibbous.png';
-                    break;
-                case 'last quarter':
-                    moonImagePath = 'C:/Users/Preet/Desktop/moon images/last_quarter.png';
-                    break;
-                case 'waning crescent':
-                    moonImagePath = 'C:/Users/Preet/Desktop/moon images/waning_crescent.png';
-                    break;
-                default:
-                    moonImagePath = 'C:/Users/Preet/Desktop/moon images/default_moon.png';  // Default image
-            }
-
-            // Update the image source
-            moonPhaseImgElement.src = moonImagePath;
         }
 
         // Call the function to display data
