@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weather Monitoring Station</title>
-    <link rel="stylesheet" href="styles.css">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -24,6 +23,42 @@
             margin-bottom: 10px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .sensor-box {
+            background: #eee;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .sensor-box:hover {
+            border: 2px solid #3498db;
+            box-shadow: 0 0 15px rgba(52, 152, 219, 0.8);
+        }
+
+        .sensor-info {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #3498db;
+            color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            width: 250px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+
+        .sensor-box:hover .sensor-info {
+            display: block;
         }
 
         h2 {
@@ -45,6 +80,26 @@
 </head>
 <body>
 
+    <!-- Sensor Boxes -->
+    <section id="sensors">
+        <div class="sensor-box">
+            <h3>BMP 180</h3>
+            <div class="sensor-info">BMP 180 is a sensor used to measure atmospheric pressure, which helps to determine weather changes.</div>
+        </div>
+        <div class="sensor-box">
+            <h3>MQ 135</h3>
+            <div class="sensor-info">MQ 135 is a gas sensor used to detect air quality, measuring harmful gases like ammonia and CO2.</div>
+        </div>
+        <div class="sensor-box">
+            <h3>Rain Sensor</h3>
+            <div class="sensor-info">The rain sensor detects the presence of water and is useful for monitoring rainfall levels.</div>
+        </div>
+        <div class="sensor-box">
+            <h3>DHT11</h3>
+            <div class="sensor-info">DHT11 is used to measure temperature and humidity, helping to track the local climate.</div>
+        </div>
+    </section>
+
     <!-- Screen 1: Date, Time, and Day -->
     <section id="screen1">
         <div class="info-box">
@@ -57,7 +112,7 @@
     <!-- Screen 2: Current Weather -->
     <section id="screen2">
         <div class="info-box">
-            <h2>Current Weather</h2>
+            <h2>Current Weather in Bangalore</h2>
             <p>Temperature: <span id="temp"></span> °C</p>
             <p>Humidity: <span id="humidity"></span> %</p>
             <p>Pressure: <span id="pressure"></span> hPa</p>
@@ -67,7 +122,7 @@
     <!-- Screen 3: 5 Days Forecast -->
     <section id="screen3">
         <div class="info-box">
-            <h2>5 Day Weather Forecast</h2>
+            <h2>5 Day Weather Forecast (Bangalore)</h2>
             <div id="forecast"></div>
         </div>
     </section>
@@ -86,56 +141,11 @@
         </div>
     </section>
 
-    <!-- Screen 5: Air Quality -->
-    <section id="screen5">
-        <div class="info-box">
-            <h2>Air Quality Comparison (3 Days)</h2>
-            <div id="air-quality"></div>
-        </div>
-    </section>
-
-    <!-- Screen 6: Wind Speed & Map -->
-    <section id="screen6">
-        <div class="info-box">
-            <h2>Wind Speed and Direction</h2>
-            <p>Speed: <span id="wind-speed"></span> km/h</p>
-            <p>Direction: <span id="wind-direction"></span></p>
-            <div id="map"></div> <!-- Map will go here -->
-        </div>
-    </section>
-
-    <!-- Screen 7: UV Index & Visibility -->
-    <section id="screen7">
-        <div class="info-box">
-            <h2>UV Index & Visibility</h2>
-            <p>UV Index: <span id="uv-index"></span></p>
-            <p>Visibility: <span id="visibility"></span> km</p>
-        </div>
-    </section>
-
-    <!-- Screen 8: Pollution Levels -->
-    <section id="screen8">
-        <div class="info-box">
-            <h2>Pollution Levels</h2>
-            <p id="pollution"></p>
-        </div>
-    </section>
-
-    <!-- Screen 9: Weather of Selected City (India) -->
-    <section id="screen9">
-        <div class="info-box">
-            <h2>Weather in Selected City (India)</h2>
-            <p>City: <span id="city-name"></span></p>
-            <p>Temperature: <span id="city-temp"></span> °C</p>
-            <p>Weather: <span id="city-weather"></span></p>
-        </div>
-    </section>
-
     <!-- External Scripts -->
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            const apiKey = 'e963f78956adf27684d7861d3c9e2f1e'; // Replace with your OpenWeather API Key
-            const city = 'Mumbai'; // Chosen city in India
+            const apiKey = 'YOUR_OPENWEATHER_API_KEY'; // Replace with your OpenWeather API Key
+            const city = 'Bangalore'; // City to display weather for
 
             // Update Time and Date
             function updateTime() {
@@ -145,7 +155,7 @@
             }
             setInterval(updateTime, 1000); // Update every second
 
-            // Fetch Weather Data from OpenWeather
+            // Fetch Weather Data for Bangalore
             function fetchWeather() {
                 fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`)
                     .then(response => response.json())
@@ -153,8 +163,6 @@
                         document.getElementById('temp').textContent = data.main.temp;
                         document.getElementById('humidity').textContent = data.main.humidity;
                         document.getElementById('pressure').textContent = data.main.pressure;
-                        document.getElementById('wind-speed').textContent = data.wind.speed;
-                        document.getElementById('wind-direction').textContent = data.wind.deg;
                         document.getElementById('sunrise').textContent = new Date(data.sys.sunrise * 1000).toLocaleTimeString();
                         document.getElementById('sunset').textContent = new Date(data.sys.sunset * 1000).toLocaleTimeString();
                     });
@@ -177,39 +185,8 @@
                     });
             }
 
-            // Fetch UV Index, Visibility
-            function fetchOtherData(lat, lon) {
-                fetch(`https://api.openweathermap.org/data/2.5/uvi?lat=${lat}&lon=${lon}&appid=${apiKey}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        document.getElementById('uv-index').textContent = data.value;
-                    });
-
-                fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`)
-                    .then(response => response.json())
-                    .then(data => {
-                        document.getElementById('visibility').textContent = data.visibility / 1000; // Convert meters to km
-                    });
-            }
-
-            // Fetch Sensor Data from Node MCU
-            function fetchSensorData() {
-                fetch('http://your-node-mcu-ip-address/sensor-data')
-                    .then(response => response.json())
-                    .then(data => {
-                        // Update the UI with sensor data
-                        document.getElementById('air-quality').textContent = data.airQuality;
-                        document.getElementById('pollution').textContent = data.pollution;
-                        // Add other sensor data
-                    });
-            }
-
-            // Call functions to fetch data
             fetchWeather();
             fetchForecast();
-            // Assume sensors data is handled separately
-            fetchSensorData(); // Fetch data from Node MCU
-
         });
     </script>
 
