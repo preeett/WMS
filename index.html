@@ -23,30 +23,42 @@
             justify-content: center;
             overflow: hidden;
             color: #fff;
+            position: relative;
         }
 
         @keyframes snowfall {
-            0% {transform: translateY(0);}
-            100% {transform: translateY(100vh);}
+            0% {
+                transform: translateY(0) translateX(0);
+            }
+            100% {
+                transform: translateY(100vh) translateX(100vw);
+            }
         }
 
         .snowflake {
             position: absolute;
-            top: -50px;
-            font-size: 0.7em; /* Smaller snowflakes */
+            top: -10px;
+            font-size: 0.7em;
             color: #fff;
             animation: snowfall 10s linear infinite;
+            opacity: 0.8;
         }
 
         .snowflake:nth-child(odd) {
-            font-size: 0.5em; /* Even smaller snowflakes */
+            font-size: 0.5em;
             animation-duration: 15s;
+            opacity: 0.6;
+        }
+
+        .snowflake:nth-child(even) {
+            animation-duration: 12s;
         }
 
         header {
             text-align: center;
-            margin-top: 20px;
+            margin-top: 30px;
             z-index: 1;
+            padding: 0 20px;
         }
 
         h1 {
@@ -54,24 +66,31 @@
             font-weight: bold;
             color: #fff;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+            margin-bottom: 20px;
         }
 
         .description {
             font-size: 20px;
             margin-top: 10px;
-            margin-bottom: 20px;
+            margin-bottom: 40px;
             max-width: 800px;
             text-align: center;
             line-height: 1.6;
             color: #f7f7f7;
         }
 
-        .weather-info {
-            background: rgba(255, 255, 255, 0.1);
+        section {
+            margin: 20px;
             padding: 20px;
             border-radius: 8px;
-            margin-bottom: 20px;
             box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+            width: 90%;
+            max-width: 800px;
+        }
+
+        .weather-info {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
             text-align: center;
         }
 
@@ -79,13 +98,13 @@
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
-            z-index: 1;
+            margin-top: 20px;
+            gap: 20px;
         }
 
         .sensor-box {
             background: rgba(255, 255, 255, 0.2);
-            padding: 30px;
-            margin: 10px;
+            padding: 20px;
             border-radius: 8px;
             text-align: center;
             width: 150px;
@@ -93,7 +112,6 @@
             cursor: pointer;
             position: relative;
             transition: all 0.3s ease;
-            z-index: 1;
             box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
         }
 
@@ -142,9 +160,11 @@
 <body>
 
     <!-- Snowfall Effect -->
-    <div class="snowflake">❄</div>
-    <div class="snowflake">❅</div>
-    <div class="snowflake">❆</div>
+    <div class="snowflake" style="left: 10%; animation-delay: 0s;">❄</div>
+    <div class="snowflake" style="left: 30%; animation-delay: 2s;">❅</div>
+    <div class="snowflake" style="left: 50%; animation-delay: 4s;">❆</div>
+    <div class="snowflake" style="left: 70%; animation-delay: 6s;">❄</div>
+    <div class="snowflake" style="left: 90%; animation-delay: 8s;">❅</div>
 
     <!-- Header and Description -->
     <header>
