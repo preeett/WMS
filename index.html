@@ -15,8 +15,7 @@
 
         body {
             font-family: 'Montserrat', sans-serif;
-            background: url('https://images.unsplash.com/photo-1581269329077-d4c4911ab59b') no-repeat center center fixed;
-            background-size: cover;
+            background-color: black;
             height: 100vh;
             display: flex;
             flex-direction: column;
@@ -34,13 +33,13 @@
         .snowflake {
             position: absolute;
             top: -50px;
-            font-size: 1em;
+            font-size: 0.7em; /* Smaller snowflakes */
             color: #fff;
             animation: snowfall 10s linear infinite;
         }
 
         .snowflake:nth-child(odd) {
-            font-size: 1.5em;
+            font-size: 0.5em; /* Even smaller snowflakes */
             animation-duration: 15s;
         }
 
@@ -68,11 +67,11 @@
         }
 
         .weather-info {
-            background: rgba(0, 0, 0, 0.6);
+            background: rgba(255, 255, 255, 0.1);
             padding: 20px;
             border-radius: 8px;
             margin-bottom: 20px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.8);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
             text-align: center;
         }
 
@@ -84,7 +83,7 @@
         }
 
         .sensor-box {
-            background: rgba(255, 255, 255, 0.7);
+            background: rgba(255, 255, 255, 0.2);
             padding: 30px;
             margin: 10px;
             border-radius: 8px;
@@ -95,7 +94,7 @@
             position: relative;
             transition: all 0.3s ease;
             z-index: 1;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
         }
 
         .sensor-box:hover {
