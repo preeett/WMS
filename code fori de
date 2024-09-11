@@ -1,0 +1,112 @@
+#define BLYNK_TEMPLATE_ID "TMPL3pNSgWQiu"
+#define BLYNK_TEMPLATE_NAME "weather monitoring system"
+
+#include <ESP8266WiFi.h>
+#include <BlynkSimpleEsp8266.h>
+#include <Wire.h>
+#include <Adafruit_SSD1306.h>
+#include <Adafruit_Sensor.h>
+#include <Adafruit_BMP085.h>
+#include <DHT.h>
+#include <MQ135.h>
+
+// Blynk Auth Token
+char auth[] = "hXboYDH-AGFJl09rlgPwwqDRCw17NjNu";  // Replace with your Blynk Auth Token
+
+// WiFi credentials
+char ssid[] = "chirag";
+char pass[] = "chirag@07";
+
+// Pin Definitions
+#define DHTPIN D4
+#define DHTTYPE DHT11
+#define MQ135PIN A0
+#define RAINPIN A0  // Analog Pin, or use digital pin if possible
+
+// OLED display settings
+#define SCREEN_WIDTH 128
+#define SCREEN_HEIGHT 64
+Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1);
+
+// Sensors initialization
+DHT dht(DHTPIN, DHTTYPE);
+Adafruit_BMP085 bmp;
+MQ135 mq135Sensor(MQ135PIN);
+
+// Blynk Virtual Pins
+#define VPIN_TEMP V0
+#define VPIN_HUMIDITY V1
+#define VPIN_PRESSURE V2
+#define VPIN_AIRQUALITY V3
+#define VPIN_RAIN V4
+
+void setup() {
+  // Start serial communication
+  Serial.begin(115200);
+
+  // Start OLED display
+  if (!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {
+    Serial.println(F("SSD1306 allocation failed"));
+    while (1);
+  }
+  display.clearDisplay();
+  display.display();
+
+  // Initialize sensors
+  dht.begin();
+  if (!bmp.begin()) {
+    Serial.println("BMP180 sensor not found!");
+    while (1);
+  }
+
+  // Connect to Wi-Fi
+  WiFi.begin(ssid, pass);
+  Serial.print("Connecting to WiFi");
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(".");
+  }
+  Serial.println("Connected to WiFi.");
+
+  // Start Blynk
+  Blynk.begin(auth, ssid, pass);
+}
+
+void loop() {
+  // Blynk and Wi-Fi handling
+  Blynk.run();
+
+  // Read sensor data
+  float temperature = dht.readTemperature();
+  float humidity = dht.readHumidity();
+  float pressure = bmp.readPressure() / 100.0F; // hPa
+  float airQuality = mq135Sensor.getPPM();
+  int rainValue = analogRead(RAINPIN);  // Rain sensor
+
+  // Update Blynk
+  Blynk.virtualWrite(VPIN_TEMP, temperature);
+  Blynk.virtualWrite(VPIN_HUMIDITY, humidity);
+  Blynk.virtualWrite(VPIN_PRESSURE, pressure);
+  Blynk.virtualWrite(VPIN_AIRQUALITY, airQuality);
+  Blynk.virtualWrite(VPIN_RAIN, rainValue);
+
+  // Display data on OLED
+  display.clearDisplay();
+  display.setTextSize(1);
+  display.setTextColor(SSD1306_WHITE);
+  display.setCursor(0, 0);
+  display.println("Weather Monitor");
+  display.setCursor(0, 10);
+  display.print("Temp: "); display.print(temperature); display.println(" C");
+  display.setCursor(0, 20);
+  display.print("Humidity: "); display.print(humidity); display.println(" %");
+  display.setCursor(0, 30);
+  display.print("Pressure: "); display.print(pressure); display.println(" hPa");
+  display.setCursor(0, 40);
+  display.print("Air Quality: "); display.print(airQuality); display.println(" ppm");
+  display.setCursor(0, 50);
+  display.print("Rain: "); display.print(rainValue);
+  display.display();
+
+  delay(2000); // Update every 2 seconds
+}
