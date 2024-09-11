@@ -260,4 +260,24 @@
         function displayAstroData() {
             // Replace with actual API calls for dynamic data
             const sunriseTime = convertUTCtoIST(1694181600);  // Example UTC timestamp for sunrise
-            const sunset
+            const sunsetTime = convertUTCtoIST(1694228400);   // Example UTC timestamp for sunset
+            const moonPhase = "Waxing Crescent";  // Example moon phase
+            const moonInfo = "Illumination: 25%";  // Example moon illumination
+            const moonDistance = "384,400 km";  // Example distance
+            const moonRiseTime = convertUTCtoIST(1694206800);  // Example moonrise time
+            const moonSetTime = convertUTCtoIST(1694252400);  // Example moonset time
+
+            document.getElementById("sunrise").textContent = sunriseTime;
+            document.getElementById("sunset").textContent = sunsetTime;
+            document.getElementById("moon-phase").textContent = moonPhase;
+            document.getElementById("moon-info").textContent = moonInfo;
+            document.getElementById("moon-distance").textContent = `Distance: ${moonDistance}`;
+            document.getElementById("moon-rise").textContent = `Moonrise: ${moonRiseTime}`;
+            document.getElementById("moon-set").textContent = `Moonset: ${moonSetTime}`;
+        }
+
+        // Call the function to display astro data on page load
+        window.onload = displayAstroData;
+    </script>
+</body>
+</html>
