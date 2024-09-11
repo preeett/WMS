@@ -6,11 +6,36 @@
     <title>Weather Monitoring Station</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            font-family: 'Montserrat', sans-serif;
+            background-color: #eaf0f2;
             color: #333;
             margin: 0;
             padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        header {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        h1 {
+            font-size: 48px;
+            font-weight: bold;
+            color: #2c3e50;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .description {
+            font-size: 20px;
+            margin-top: 10px;
+            margin-bottom: 20px;
+            max-width: 800px;
+            text-align: center;
+            line-height: 1.6;
         }
 
         section {
@@ -26,12 +51,20 @@
             transition: all 0.3s ease;
         }
 
+        .sensor-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
         .sensor-box {
             background: #eee;
-            padding: 15px;
-            margin-bottom: 10px;
+            padding: 30px;
+            margin: 10px;
             border-radius: 8px;
             text-align: center;
+            width: 150px;
+            height: 150px;
             cursor: pointer;
             position: relative;
             transition: all 0.3s ease;
@@ -45,7 +78,7 @@
         .sensor-info {
             display: none;
             position: absolute;
-            top: 100%;
+            bottom: 100%;
             left: 50%;
             transform: translateX(-50%);
             background-color: #3498db;
@@ -64,6 +97,7 @@
         h2 {
             font-size: 24px;
             margin-bottom: 10px;
+            text-align: center;
         }
 
         p {
@@ -76,33 +110,34 @@
             height: 300px;
             background-color: #eaeaea;
         }
+
+        /* Graphics and Dynamics */
+        .weather-info {
+            background: linear-gradient(to bottom right, #3498db, #2ecc71);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .weather-info span {
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
 
-    <!-- Sensor Boxes -->
-    <section id="sensors">
-        <div class="sensor-box">
-            <h3>BMP 180</h3>
-            <div class="sensor-info">BMP 180 is a sensor used to measure atmospheric pressure, which helps to determine weather changes.</div>
-        </div>
-        <div class="sensor-box">
-            <h3>MQ 135</h3>
-            <div class="sensor-info">MQ 135 is a gas sensor used to detect air quality, measuring harmful gases like ammonia and CO2.</div>
-        </div>
-        <div class="sensor-box">
-            <h3>Rain Sensor</h3>
-            <div class="sensor-info">The rain sensor detects the presence of water and is useful for monitoring rainfall levels.</div>
-        </div>
-        <div class="sensor-box">
-            <h3>DHT11</h3>
-            <div class="sensor-info">DHT11 is used to measure temperature and humidity, helping to track the local climate.</div>
-        </div>
-    </section>
+    <!-- Header and Description -->
+    <header>
+        <h1>Weather Monitoring Station</h1>
+        <p class="description">A weather monitoring station is a device that collects data related to the atmosphere, temperature, humidity, and more. It is especially useful in physics, where students can study weather patterns, pressure systems, and air quality. Monitoring atmospheric conditions is critical in understanding various physical phenomena such as heat transfer, fluid dynamics, and gas laws.</p>
+    </header>
 
     <!-- Screen 1: Date, Time, and Day -->
     <section id="screen1">
-        <div class="info-box">
+        <div class="weather-info">
             <h2>Current Time and Date</h2>
             <p id="current-time"></p>
             <p id="current-date"></p>
@@ -111,40 +146,42 @@
 
     <!-- Screen 2: Current Weather -->
     <section id="screen2">
-        <div class="info-box">
+        <div class="weather-info">
             <h2>Current Weather in Bangalore</h2>
-            <p>Temperature: <span id="temp"></span> °C</p>
-            <p>Humidity: <span id="humidity"></span> %</p>
-            <p>Pressure: <span id="pressure"></span> hPa</p>
+            <p>Temperature: <span id="temp">Loading...</span> °C</p>
+            <p>Humidity: <span id="humidity">Loading...</span> %</p>
+            <p>Pressure: <span id="pressure">Loading...</span> hPa</p>
+            <p>Sunrise: <span id="sunrise">Loading...</span></p>
+            <p>Sunset: <span id="sunset">Loading...</span></p>
         </div>
     </section>
 
-    <!-- Screen 3: 5 Days Forecast -->
-    <section id="screen3">
-        <div class="info-box">
-            <h2>5 Day Weather Forecast (Bangalore)</h2>
-            <div id="forecast"></div>
-        </div>
-    </section>
-
-    <!-- Screen 4: Sun and Moon Info -->
-    <section id="screen4">
-        <div class="info-box">
-            <h2>Sunrise and Sunset</h2>
-            <p>Sunrise: <span id="sunrise"></span></p>
-            <p>Sunset: <span id="sunset"></span></p>
-        </div>
-        <div class="info-box">
-            <h2>Moon Phase</h2>
-            <p id="moon-phase"></p>
-            <p id="moon-about"></p>
+    <!-- Sensor Boxes at the Bottom -->
+    <section id="sensors">
+        <div class="sensor-container">
+            <div class="sensor-box">
+                <h3>BMP 180</h3>
+                <div class="sensor-info">BMP 180 measures atmospheric pressure, helpful for predicting weather changes.</div>
+            </div>
+            <div class="sensor-box">
+                <h3>MQ 135</h3>
+                <div class="sensor-info">MQ 135 detects air quality by measuring harmful gases like CO2 and ammonia.</div>
+            </div>
+            <div class="sensor-box">
+                <h3>Rain Sensor</h3>
+                <div class="sensor-info">Detects the presence of water and is useful for monitoring rainfall levels.</div>
+            </div>
+            <div class="sensor-box">
+                <h3>DHT11</h3>
+                <div class="sensor-info">DHT11 measures temperature and humidity for local climate tracking.</div>
+            </div>
         </div>
     </section>
 
     <!-- External Scripts -->
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            const apiKey = 'YOUR_OPENWEATHER_API_KEY'; // Replace with your OpenWeather API Key
+            const apiKey = 'e963f78956adf27684d7861d3c9e2f1e'; // Replace with your OpenWeather API Key
             const city = 'Bangalore'; // City to display weather for
 
             // Update Time and Date
@@ -165,28 +202,11 @@
                         document.getElementById('pressure').textContent = data.main.pressure;
                         document.getElementById('sunrise').textContent = new Date(data.sys.sunrise * 1000).toLocaleTimeString();
                         document.getElementById('sunset').textContent = new Date(data.sys.sunset * 1000).toLocaleTimeString();
-                    });
-            }
-
-            // Fetch 5 Days Weather Forecast
-            function fetchForecast() {
-                fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=metric`)
-                    .then(response => response.json())
-                    .then(data => {
-                        const forecastElement = document.getElementById('forecast');
-                        forecastElement.innerHTML = ''; // Clear forecast content
-                        for (let i = 0; i < 5; i++) {
-                            const dayData = data.list[i * 8]; // Every 8th entry is approximately a day
-                            const forecast = `
-                                <p>Day ${i + 1}: ${dayData.main.temp} °C, ${dayData.weather[0].description}</p>
-                            `;
-                            forecastElement.innerHTML += forecast;
-                        }
-                    });
+                    })
+                    .catch(error => console.log(error));
             }
 
             fetchWeather();
-            fetchForecast();
         });
     </script>
 
