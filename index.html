@@ -39,14 +39,14 @@
         }
 
         /* Astro Section */
-        .astro-section, .sensor-section {
+        .astro-section {
             display: flex;
-            justify-content: center;
             flex-wrap: wrap;
+            justify-content: center;
             margin: 50px 0;
         }
 
-        .astro-card, .sensor-card {
+        .astro-card {
             background-color: #1A1A1A;
             color: white;
             padding: 20px;
@@ -59,81 +59,17 @@
             border: 2px solid transparent;
         }
 
-        .astro-card:hover, .sensor-card:hover {
+        .astro-card:hover {
             transform: scale(1.1);
             border-color: #58a6ff;
             box-shadow: 0 0 20px #58a6ff;
             animation: pulse 1.5s infinite;
         }
 
-        .astro-card h4, .sensor-card h4 {
+        .astro-card h4 {
             margin: 10px 0;
             font-size: 1.4rem;
             color: #58a6ff;
-        }
-
-        /* Sensor Information Section */
-        .sensor-info {
-            margin-top: 40px;
-        }
-
-        .sensor-info p {
-            text-align: center;
-            margin: 20px;
-            font-size: 1.2rem;
-        }
-
-        /* Usefulness Section */
-        .usefulness {
-            margin: 50px 0;
-            text-align: center;
-        }
-
-        .usefulness h2 {
-            color: #58a6ff;
-        }
-
-        .usefulness p {
-            font-size: 1.2rem;
-            max-width: 700px;
-            margin: auto;
-            color: #b1bac4;
-        }
-
-        /* Moon and Sunrise Section */
-        .daily-astro-section {
-            display: flex;
-            flex-wrap: nowrap;
-            overflow-x: auto;
-            padding: 20px 0;
-            align-items: center;
-        }
-
-        .daily-astro-card {
-            background-color: #161b22;
-            color: white;
-            padding: 15px;
-            margin: 10px;
-            border-radius: 8px;
-            width: 220px;
-            text-align: left;
-            transition: all 0.3s ease-in-out;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
-            border: 2px solid transparent;
-        }
-
-        .daily-astro-card:hover {
-            transform: scale(1.05);
-            border-color: #58a6ff;
-            box-shadow: 0 0 15px #58a6ff;
-        }
-
-        .daily-astro-card h4 {
-            color: #58a6ff;
-        }
-
-        .daily-astro-card p {
-            margin: 8px 0;
         }
 
         /* Animation for pulse effect */
@@ -153,13 +89,18 @@
 <body>
     <div class="header">
         <h1>Weather Monitoring Station</h1>
-        <p>Dynamic weather updates with sunrise, sunset, and moon phases</p>
+        <p>Dynamic weather updates with sunrise, sunset, and moon phases for Bangalore</p>
     </div>
 
     <div class="content">
         <!-- Sunrise, Sunset, and Moon Phases Section -->
         <h2>Sunrise, Sunset & Moon Phases</h2>
         <div class="astro-section">
+            <div class="astro-card">
+                <h4>Weather</h4>
+                <p id="weather-info">Loading...</p>
+            </div>
+
             <div class="astro-card">
                 <h4>Sunrise</h4>
                 <p id="sunrise">Loading...</p>
@@ -174,95 +115,57 @@
                 <h4>Moon Phase</h4>
                 <p id="moon-phase">Loading...</p>
             </div>
-
-            <div class="astro-card">
-                <h4>Moon Info</h4>
-                <p id="moon-info">Loading...</p>
-                <p id="moon-distance">Distance: Loading...</p>
-                <p id="moon-rise">Moonrise: Loading...</p>
-                <p id="moon-set">Moonset: Loading...</p>
-            </div>
-        </div>
-
-        <!-- Sensor Information Section -->
-        <h2>Our Sensors</h2>
-        <div class="sensor-section">
-            <div class="sensor-card">
-                <h4>NodeMCU</h4>
-                <p>Microcontroller handling all sensor data and communication with the cloud.</p>
-            </div>
-
-            <div class="sensor-card">
-                <h4>DHT11</h4>
-                <p>Measures temperature and humidity to monitor atmospheric conditions.</p>
-            </div>
-
-            <div class="sensor-card">
-                <h4>MQ135</h4>
-                <p>Detects harmful gases such as CO2, NH3, and Benzene for air quality monitoring.</p>
-            </div>
-
-            <div class="sensor-card">
-                <h4>Rain Sensor</h4>
-                <p>Detects rainfall to monitor precipitation levels in real-time.</p>
-            </div>
-
-            <div class="sensor-card">
-                <h4>BMP180</h4>
-                <p>Measures atmospheric pressure and altitude, helpful in weather prediction.</p>
-            </div>
-
-            <div class="sensor-card">
-                <h4>BH1760</h4>
-                <p>Light intensity sensor used to measure ambient brightness levels.</p>
-            </div>
-        </div>
-
-        <!-- Sensor Info Description on Hover -->
-        <div class="sensor-info">
-            <p id="sensor-description">Hover over a sensor to learn more about its purpose and use.</p>
-        </div>
-
-        <!-- Usefulness Section -->
-        <div class="usefulness">
-            <h2>Why is this Project Important?</h2>
-            <p>
-                Weather monitoring stations are crucial for gathering real-time data on environmental conditions like temperature, humidity, pressure, and light intensity.
-                This data can help predict weather patterns, aid in agricultural planning, and ensure the safety of communities by providing early warnings of extreme conditions.
-                By understanding these metrics, we can better prepare for and respond to changing weather conditions, leading to improved decision-making and enhanced quality of life.
-            </p>
         </div>
     </div>
 
     <script>
-        // Function to convert UTC to Indian Standard Time (IST)
-        function convertUTCtoIST(utcSeconds) {
-            let date = new Date(utcSeconds * 1000);
-            return date.toLocaleTimeString('en-IN', { timeZone: 'Asia/Kolkata', hour12: true });
+        const weatherApiKey = 'YOUR_OPENWEATHERMAP_API_KEY';
+        const city = 'Bangalore';
+        const lat = '12.9716';
+        const lon = '77.5946';
+
+        // Fetch weather data
+        async function fetchWeatherData() {
+            try {
+                const weatherResponse = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${weatherApiKey}&units=metric`);
+                const weatherData = await weatherResponse.json();
+                document.getElementById('weather-info').textContent = `Temperature: ${weatherData.main.temp}°C, Weather: ${weatherData.weather[0].description}`;
+            } catch (error) {
+                console.error('Error fetching weather data:', error);
+                document.getElementById('weather-info').textContent = 'Error loading data';
+            }
         }
 
-        // Simulate fetching sunrise, sunset, moon phase, and moon info data for Indian timezone
-        function displayAstroData() {
-            // Replace with actual API calls for dynamic data
-            const sunriseTime = convertUTCtoIST(1694181600);  // Example UTC timestamp for sunrise
-            const sunsetTime = convertUTCtoIST(1694228400);   // Example UTC timestamp for sunset
-            const moonPhase = "Waxing Crescent";  // Example moon phase
-            const moonInfo = "Illumination: 25%";  // Example moon illumination
-            const moonDistance = "384,400 km";  // Example distance
-            const moonRiseTime = convertUTCtoIST(1694206800);  // Example moonrise time
-            const moonSetTime = convertUTCtoIST(1694252400);  // Example moonset time
-
-            document.getElementById("sunrise").textContent = sunriseTime;
-            document.getElementById("sunset").textContent = sunsetTime;
-            document.getElementById("moon-phase").textContent = moonPhase;
-            document.getElementById("moon-info").textContent = moonInfo;
-            document.getElementById("moon-distance").textContent = `Distance: ${moonDistance}`;
-            document.getElementById("moon-rise").textContent = `Moonrise: ${moonRiseTime}`;
-            document.getElementById("moon-set").textContent = `Moonset: ${moonSetTime}`;
+        // Fetch sunrise and sunset times
+        async function fetchSunData() {
+            try {
+                const sunResponse = await fetch(`https://api.sunrise-sunset.org/json?lat=${lat}&lng=${lon}`);
+                const sunData = await sunResponse.json();
+                document.getElementById('sunrise').textContent = `Sunrise: ${sunData.results.sunrise}`;
+                document.getElementById('sunset').textContent = `Sunset: ${sunData.results.sunset}`;
+            } catch (error) {
+                console.error('Error fetching sunrise/sunset data:', error);
+                document.getElementById('sunrise').textContent = 'Error loading data';
+                document.getElementById('sunset').textContent = 'Error loading data';
+            }
         }
 
-        // Call the function to display astro data on page load
-        window.onload = displayAstroData;
+        // Fetch moon phase
+        async function fetchMoonPhase() {
+            try {
+                const moonResponse = await fetch(`https://api.le-systeme-solaire.net/rest/bodies/moon`);
+                const moonData = await moonResponse.json();
+                document.getElementById('moon-phase').textContent = `Moon Phase: ${moonData.moonPhase}`;
+            } catch (error) {
+                console.error('Error fetching moon phase data:', error);
+                document.getElementById('moon-phase').textContent = 'Error loading data';
+            }
+        }
+
+        // Call the functions to display data
+        fetchWeatherData();
+        fetchSunData();
+        fetchMoonPhase();
     </script>
 </body>
 </html>
