@@ -4,168 +4,214 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weather Monitoring Station</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
     <style>
-        /* General Page Styles */
         body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #0d1117;
-            color: white;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
             margin: 0;
             padding: 0;
         }
 
-        .header {
-            text-align: center;
-            padding: 20px;
-            background-color: #161b22;
-            color: #58a6ff;
-            border-bottom: 3px solid #58a6ff;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+        section {
+            margin: 20px;
         }
 
-        h1 {
-            margin: 0;
+        .info-box {
+            background: #fff;
+            padding: 20px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
         h2 {
-            text-align: center;
-            margin-top: 40px;
-            color: #58a6ff;
+            font-size: 24px;
+            margin-bottom: 10px;
         }
 
-        .content {
-            padding: 20px;
+        p {
+            font-size: 18px;
+            margin: 5px 0;
         }
 
-        /* Astro Section */
-        .astro-section {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            margin: 50px 0;
-        }
-
-        .astro-card {
-            background-color: #1A1A1A;
-            color: white;
-            padding: 20px;
-            margin: 10px;
-            border-radius: 10px;
-            width: 220px;
-            text-align: center;
-            transition: all 0.3s ease-in-out;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
-            border: 2px solid transparent;
-        }
-
-        .astro-card:hover {
-            transform: scale(1.1);
-            border-color: #58a6ff;
-            box-shadow: 0 0 20px #58a6ff;
-            animation: pulse 1.5s infinite;
-        }
-
-        .astro-card h4 {
-            margin: 10px 0;
-            font-size: 1.4rem;
-            color: #58a6ff;
-        }
-
-        /* Animation for pulse effect */
-        @keyframes pulse {
-            0% {
-                box-shadow: 0 0 20px rgba(88, 166, 255, 0.5);
-            }
-            50% {
-                box-shadow: 0 0 40px rgba(88, 166, 255, 0.7);
-            }
-            100% {
-                box-shadow: 0 0 20px rgba(88, 166, 255, 0.5);
-            }
+        #map {
+            width: 100%;
+            height: 300px;
+            background-color: #eaeaea;
         }
     </style>
 </head>
 <body>
-    <div class="header">
-        <h1>Weather Monitoring Station</h1>
-        <p>Dynamic weather updates with sunrise, sunset, and moon phases for Bangalore</p>
-    </div>
 
-    <div class="content">
-        <!-- Sunrise, Sunset, and Moon Phases Section -->
-        <h2>Sunrise, Sunset & Moon Phases</h2>
-        <div class="astro-section">
-            <div class="astro-card">
-                <h4>Weather</h4>
-                <p id="weather-info">Loading...</p>
-            </div>
-
-            <div class="astro-card">
-                <h4>Sunrise</h4>
-                <p id="sunrise">Loading...</p>
-            </div>
-
-            <div class="astro-card">
-                <h4>Sunset</h4>
-                <p id="sunset">Loading...</p>
-            </div>
-
-            <div class="astro-card">
-                <h4>Moon Phase</h4>
-                <p id="moon-phase">Loading...</p>
-            </div>
+    <!-- Screen 1: Date, Time, and Day -->
+    <section id="screen1">
+        <div class="info-box">
+            <h2>Current Time and Date</h2>
+            <p id="current-time"></p>
+            <p id="current-date"></p>
         </div>
-    </div>
+    </section>
 
+    <!-- Screen 2: Current Weather -->
+    <section id="screen2">
+        <div class="info-box">
+            <h2>Current Weather</h2>
+            <p>Temperature: <span id="temp"></span> °C</p>
+            <p>Humidity: <span id="humidity"></span> %</p>
+            <p>Pressure: <span id="pressure"></span> hPa</p>
+        </div>
+    </section>
+
+    <!-- Screen 3: 5 Days Forecast -->
+    <section id="screen3">
+        <div class="info-box">
+            <h2>5 Day Weather Forecast</h2>
+            <div id="forecast"></div>
+        </div>
+    </section>
+
+    <!-- Screen 4: Sun and Moon Info -->
+    <section id="screen4">
+        <div class="info-box">
+            <h2>Sunrise and Sunset</h2>
+            <p>Sunrise: <span id="sunrise"></span></p>
+            <p>Sunset: <span id="sunset"></span></p>
+        </div>
+        <div class="info-box">
+            <h2>Moon Phase</h2>
+            <p id="moon-phase"></p>
+            <p id="moon-about"></p>
+        </div>
+    </section>
+
+    <!-- Screen 5: Air Quality -->
+    <section id="screen5">
+        <div class="info-box">
+            <h2>Air Quality Comparison (3 Days)</h2>
+            <div id="air-quality"></div>
+        </div>
+    </section>
+
+    <!-- Screen 6: Wind Speed & Map -->
+    <section id="screen6">
+        <div class="info-box">
+            <h2>Wind Speed and Direction</h2>
+            <p>Speed: <span id="wind-speed"></span> km/h</p>
+            <p>Direction: <span id="wind-direction"></span></p>
+            <div id="map"></div> <!-- Map will go here -->
+        </div>
+    </section>
+
+    <!-- Screen 7: UV Index & Visibility -->
+    <section id="screen7">
+        <div class="info-box">
+            <h2>UV Index & Visibility</h2>
+            <p>UV Index: <span id="uv-index"></span></p>
+            <p>Visibility: <span id="visibility"></span> km</p>
+        </div>
+    </section>
+
+    <!-- Screen 8: Pollution Levels -->
+    <section id="screen8">
+        <div class="info-box">
+            <h2>Pollution Levels</h2>
+            <p id="pollution"></p>
+        </div>
+    </section>
+
+    <!-- Screen 9: Weather of Selected City (India) -->
+    <section id="screen9">
+        <div class="info-box">
+            <h2>Weather in Selected City (India)</h2>
+            <p>City: <span id="city-name"></span></p>
+            <p>Temperature: <span id="city-temp"></span> °C</p>
+            <p>Weather: <span id="city-weather"></span></p>
+        </div>
+    </section>
+
+    <!-- External Scripts -->
     <script>
-        const weatherApiKey = 'YOUR_OPENWEATHERMAP_API_KEY';
-        const city = 'Bangalore';
-        const lat = '12.9716';
-        const lon = '77.5946';
+        document.addEventListener('DOMContentLoaded', function () {
+            const apiKey = 'e963f78956adf27684d7861d3c9e2f1e'; // Replace with your OpenWeather API Key
+            const city = 'Mumbai'; // Chosen city in India
 
-        // Fetch weather data
-        async function fetchWeatherData() {
-            try {
-                const weatherResponse = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${weatherApiKey}&units=metric`);
-                const weatherData = await weatherResponse.json();
-                document.getElementById('weather-info').textContent = `Temperature: ${weatherData.main.temp}°C, Weather: ${weatherData.weather[0].description}`;
-            } catch (error) {
-                console.error('Error fetching weather data:', error);
-                document.getElementById('weather-info').textContent = 'Error loading data';
+            // Update Time and Date
+            function updateTime() {
+                const now = new Date();
+                document.getElementById('current-time').textContent = now.toLocaleTimeString();
+                document.getElementById('current-date').textContent = now.toLocaleDateString();
             }
-        }
+            setInterval(updateTime, 1000); // Update every second
 
-        // Fetch sunrise and sunset times
-        async function fetchSunData() {
-            try {
-                const sunResponse = await fetch(`https://api.sunrise-sunset.org/json?lat=${lat}&lng=${lon}`);
-                const sunData = await sunResponse.json();
-                document.getElementById('sunrise').textContent = `Sunrise: ${sunData.results.sunrise}`;
-                document.getElementById('sunset').textContent = `Sunset: ${sunData.results.sunset}`;
-            } catch (error) {
-                console.error('Error fetching sunrise/sunset data:', error);
-                document.getElementById('sunrise').textContent = 'Error loading data';
-                document.getElementById('sunset').textContent = 'Error loading data';
+            // Fetch Weather Data from OpenWeather
+            function fetchWeather() {
+                fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`)
+                    .then(response => response.json())
+                    .then(data => {
+                        document.getElementById('temp').textContent = data.main.temp;
+                        document.getElementById('humidity').textContent = data.main.humidity;
+                        document.getElementById('pressure').textContent = data.main.pressure;
+                        document.getElementById('wind-speed').textContent = data.wind.speed;
+                        document.getElementById('wind-direction').textContent = data.wind.deg;
+                        document.getElementById('sunrise').textContent = new Date(data.sys.sunrise * 1000).toLocaleTimeString();
+                        document.getElementById('sunset').textContent = new Date(data.sys.sunset * 1000).toLocaleTimeString();
+                    });
             }
-        }
 
-        // Fetch moon phase
-        async function fetchMoonPhase() {
-            try {
-                const moonResponse = await fetch(`https://api.le-systeme-solaire.net/rest/bodies/moon`);
-                const moonData = await moonResponse.json();
-                document.getElementById('moon-phase').textContent = `Moon Phase: ${moonData.moonPhase}`;
-            } catch (error) {
-                console.error('Error fetching moon phase data:', error);
-                document.getElementById('moon-phase').textContent = 'Error loading data';
+            // Fetch 5 Days Weather Forecast
+            function fetchForecast() {
+                fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=metric`)
+                    .then(response => response.json())
+                    .then(data => {
+                        const forecastElement = document.getElementById('forecast');
+                        forecastElement.innerHTML = ''; // Clear forecast content
+                        for (let i = 0; i < 5; i++) {
+                            const dayData = data.list[i * 8]; // Every 8th entry is approximately a day
+                            const forecast = `
+                                <p>Day ${i + 1}: ${dayData.main.temp} °C, ${dayData.weather[0].description}</p>
+                            `;
+                            forecastElement.innerHTML += forecast;
+                        }
+                    });
             }
-        }
 
-        // Call the functions to display data
-        fetchWeatherData();
-        fetchSunData();
-        fetchMoonPhase();
+            // Fetch UV Index, Visibility
+            function fetchOtherData(lat, lon) {
+                fetch(`https://api.openweathermap.org/data/2.5/uvi?lat=${lat}&lon=${lon}&appid=${apiKey}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        document.getElementById('uv-index').textContent = data.value;
+                    });
+
+                fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`)
+                    .then(response => response.json())
+                    .then(data => {
+                        document.getElementById('visibility').textContent = data.visibility / 1000; // Convert meters to km
+                    });
+            }
+
+            // Fetch Sensor Data from Node MCU
+            function fetchSensorData() {
+                fetch('http://your-node-mcu-ip-address/sensor-data')
+                    .then(response => response.json())
+                    .then(data => {
+                        // Update the UI with sensor data
+                        document.getElementById('air-quality').textContent = data.airQuality;
+                        document.getElementById('pollution').textContent = data.pollution;
+                        // Add other sensor data
+                    });
+            }
+
+            // Call functions to fetch data
+            fetchWeather();
+            fetchForecast();
+            // Assume sensors data is handled separately
+            fetchSensorData(); // Fetch data from Node MCU
+
+        });
     </script>
+
 </body>
 </html>
