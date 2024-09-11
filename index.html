@@ -15,27 +15,33 @@
 
         body {
             font-family: 'Montserrat', sans-serif;
-            background: linear-gradient(-45deg, #23a6d5, #23d5ab, #ff758c, #ff7eb3);
-            background-size: 400% 400%;
-            animation: gradient 15s ease infinite;
-            color: #333;
+            background: url('https://images.unsplash.com/photo-1581269329077-d4c4911ab59b') no-repeat center center fixed;
+            background-size: cover;
             height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            overflow: hidden;
+            color: #fff;
         }
 
-        @keyframes gradient {
-            0% {
-                background-position: 0% 50%;
-            }
-            50% {
-                background-position: 100% 50%;
-            }
-            100% {
-                background-position: 0% 50%;
-            }
+        @keyframes snowfall {
+            0% {transform: translateY(0);}
+            100% {transform: translateY(100vh);}
+        }
+
+        .snowflake {
+            position: absolute;
+            top: -50px;
+            font-size: 1em;
+            color: #fff;
+            animation: snowfall 10s linear infinite;
+        }
+
+        .snowflake:nth-child(odd) {
+            font-size: 1.5em;
+            animation-duration: 15s;
         }
 
         header {
@@ -48,7 +54,7 @@
             font-size: 48px;
             font-weight: bold;
             color: #fff;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
         }
 
         .description {
@@ -61,18 +67,12 @@
             color: #f7f7f7;
         }
 
-        section {
-            margin: 20px;
-            z-index: 1;
-        }
-
         .weather-info {
-            background: rgba(255, 255, 255, 0.9);
-            color: #333;
+            background: rgba(0, 0, 0, 0.6);
             padding: 20px;
             border-radius: 8px;
             margin-bottom: 20px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.8);
             text-align: center;
         }
 
@@ -84,7 +84,7 @@
         }
 
         .sensor-box {
-            background: rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 0.7);
             padding: 30px;
             margin: 10px;
             border-radius: 8px;
@@ -141,6 +141,11 @@
     </style>
 </head>
 <body>
+
+    <!-- Snowfall Effect -->
+    <div class="snowflake">❄</div>
+    <div class="snowflake">❅</div>
+    <div class="snowflake">❆</div>
 
     <!-- Header and Description -->
     <header>
