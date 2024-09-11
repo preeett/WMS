@@ -72,6 +72,20 @@
             color: #58a6ff;
         }
 
+        /* Updated Image Style */
+        .astro-card img {
+            width: 100px;
+            height: 100px;
+            margin-bottom: 15px;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .astro-card:hover img {
+            transform: rotate(360deg);
+            box-shadow: 0 0 20px #58a6ff;
+            border-radius: 50%;
+        }
+
         /* Sensor Information Section */
         .sensor-info {
             margin-top: 40px;
@@ -171,6 +185,7 @@
             </div>
 
             <div class="astro-card">
+                <img id="moon-phase-img" src="https://via.placeholder.com/200" alt="Moon Phase Image" style="width: 100px; height: 100px;">
                 <h4>Moon Phase</h4>
                 <p id="moon-phase">Loading...</p>
             </div>
@@ -187,7 +202,35 @@
         <!-- Sensor Information Section -->
         <h2>Our Sensors</h2>
         <div class="sensor-section">
-            <!-- Sensor cards -->
+            <div class="sensor-card">
+                <h4>NodeMCU</h4>
+                <p>Microcontroller handling all sensor data and communication with the cloud.</p>
+            </div>
+
+            <div class="sensor-card">
+                <h4>DHT11</h4>
+                <p>Measures temperature and humidity to monitor atmospheric conditions.</p>
+            </div>
+
+            <div class="sensor-card">
+                <h4>MQ135</h4>
+                <p>Detects harmful gases such as CO2, NH3, and Benzene for air quality monitoring.</p>
+            </div>
+
+            <div class="sensor-card">
+                <h4>Rain Sensor</h4>
+                <p>Detects rainfall to monitor precipitation levels in real-time.</p>
+            </div>
+
+            <div class="sensor-card">
+                <h4>BMP180</h4>
+                <p>Measures atmospheric pressure and altitude, helpful in weather prediction.</p>
+            </div>
+
+            <div class="sensor-card">
+                <h4>BH1760</h4>
+                <p>Light intensity sensor used to measure ambient brightness levels.</p>
+            </div>
         </div>
 
         <!-- Sensor Info Description on Hover -->
@@ -217,23 +260,4 @@
         function displayAstroData() {
             // Replace with actual API calls for dynamic data
             const sunriseTime = convertUTCtoIST(1694181600);  // Example UTC timestamp for sunrise
-            const sunsetTime = convertUTCtoIST(1694224800);   // Example UTC timestamp for sunset
-            const moonPhase = 'Full Moon';                    // Example moon phase (Replace this with actual data)
-            const moonDistance = '384,400 km';                // Example moon distance (Replace with actual data)
-            const moonriseTime = convertUTCtoIST(1694150400); // Example moonrise time
-            const moonsetTime = convertUTCtoIST(1694193600);  // Example moonset time
-
-            // Update HTML content with real-time data
-            document.getElementById('sunrise').innerHTML = sunriseTime;
-            document.getElementById('sunset').innerHTML = sunsetTime;
-            document.getElementById('moon-phase').innerHTML = moonPhase;
-            document.getElementById('moon-distance').innerHTML = `Distance: ${moonDistance}`;
-            document.getElementById('moon-rise').innerHTML = `Moonrise: ${moonriseTime}`;
-            document.getElementById('moon-set').innerHTML = `Moonset: ${moonsetTime}`;
-        }
-
-        // Call the function to display data
-        displayAstroData();
-    </script>
-</body>
-</html>
+            const sunset
