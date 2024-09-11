@@ -16,15 +16,11 @@
         body {
             font-family: 'Montserrat', sans-serif;
             background-color: black;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
             color: #fff;
-            position: relative;
             padding: 20px;
+            overflow: auto; /* Allow scrolling */
+            height: 100vh;
+            margin: 0;
         }
 
         @keyframes snowfall {
@@ -58,8 +54,6 @@
         header {
             text-align: center;
             margin-bottom: 40px;
-            z-index: 1;
-            padding: 0 20px;
         }
 
         h1 {
@@ -78,6 +72,8 @@
             text-align: center;
             line-height: 1.6;
             color: #f7f7f7;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         section {
@@ -85,12 +81,12 @@
             padding: 20px;
             border-radius: 12px;
             box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
-            width: 100%;
+            width: calc(100% - 40px);
             max-width: 800px;
+            background: rgba(255, 255, 255, 0.1);
         }
 
         .weather-info {
-            background: rgba(255, 255, 255, 0.1);
             color: #fff;
             text-align: center;
         }
@@ -173,48 +169,51 @@
         <p class="description">A weather monitoring station is a device that collects data related to the atmosphere, temperature, humidity, and more. It is especially useful in physics, where students can study weather patterns, pressure systems, and air quality. Monitoring atmospheric conditions is critical in understanding various physical phenomena such as heat transfer, fluid dynamics, and gas laws.</p>
     </header>
 
-    <!-- Screen 1: Date, Time, and Day -->
-    <section id="screen1">
-        <div class="weather-info">
-            <h2>Current Time and Date</h2>
-            <p id="current-time"></p>
-            <p id="current-date"></p>
-        </div>
-    </section>
+    <!-- Main Content -->
+    <div class="content">
+        <!-- Screen 1: Date, Time, and Day -->
+        <section id="screen1">
+            <div class="weather-info">
+                <h2>Current Time and Date</h2>
+                <p id="current-time"></p>
+                <p id="current-date"></p>
+            </div>
+        </section>
 
-    <!-- Screen 2: Current Weather -->
-    <section id="screen2">
-        <div class="weather-info">
-            <h2>Current Weather in Bangalore</h2>
-            <p>Temperature: <span id="temp">Loading...</span> °C</p>
-            <p>Humidity: <span id="humidity">Loading...</span> %</p>
-            <p>Pressure: <span id="pressure">Loading...</span> hPa</p>
-            <p>Sunrise: <span id="sunrise">Loading...</span></p>
-            <p>Sunset: <span id="sunset">Loading...</span></p>
-        </div>
-    </section>
+        <!-- Screen 2: Current Weather -->
+        <section id="screen2">
+            <div class="weather-info">
+                <h2>Current Weather in Bangalore</h2>
+                <p>Temperature: <span id="temp">Loading...</span> °C</p>
+                <p>Humidity: <span id="humidity">Loading...</span> %</p>
+                <p>Pressure: <span id="pressure">Loading...</span> hPa</p>
+                <p>Sunrise: <span id="sunrise">Loading...</span></p>
+                <p>Sunset: <span id="sunset">Loading...</span></p>
+            </div>
+        </section>
 
-    <!-- Sensor Boxes at the Bottom -->
-    <section id="sensors">
-        <div class="sensor-container">
-            <div class="sensor-box">
-                <h3>BMP 180</h3>
-                <div class="sensor-info">BMP 180 measures atmospheric pressure, helpful for predicting weather changes.</div>
+        <!-- Sensor Boxes at the Bottom -->
+        <section id="sensors">
+            <div class="sensor-container">
+                <div class="sensor-box">
+                    <h3>BMP 180</h3>
+                    <div class="sensor-info">BMP 180 measures atmospheric pressure, helpful for predicting weather changes.</div>
+                </div>
+                <div class="sensor-box">
+                    <h3>MQ 135</h3>
+                    <div class="sensor-info">MQ 135 detects air quality by measuring harmful gases like CO2 and ammonia.</div>
+                </div>
+                <div class="sensor-box">
+                    <h3>Rain Sensor</h3>
+                    <div class="sensor-info">Detects the presence of water and is useful for monitoring rainfall levels.</div>
+                </div>
+                <div class="sensor-box">
+                    <h3>DHT11</h3>
+                    <div class="sensor-info">DHT11 measures temperature and humidity for local climate tracking.</div>
+                </div>
             </div>
-            <div class="sensor-box">
-                <h3>MQ 135</h3>
-                <div class="sensor-info">MQ 135 detects air quality by measuring harmful gases like CO2 and ammonia.</div>
-            </div>
-            <div class="sensor-box">
-                <h3>Rain Sensor</h3>
-                <div class="sensor-info">Detects the presence of water and is useful for monitoring rainfall levels.</div>
-            </div>
-            <div class="sensor-box">
-                <h3>DHT11</h3>
-                <div class="sensor-info">DHT11 measures temperature and humidity for local climate tracking.</div>
-            </div>
-        </div>
-    </section>
+        </section>
+    </div>
 
     <!-- External Scripts -->
     <script>
