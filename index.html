@@ -36,6 +36,15 @@
             left: var(--left);
         }
 
+        @keyframes snowfall {
+            0% {
+                transform: translateY(-50px);
+            }
+            100% {
+                transform: translateY(100vh);
+            }
+        }
+
         header {
             text-align: center;
             margin-bottom: 40px;
@@ -140,16 +149,16 @@
 </head>
 <body>
 
-    <!-- Snowflake Effect (Solid Circles) -->
-    <div class="snowflake"></div>
-    <div class="snowflake"></div>
-    <div class="snowflake"></div>
-    <div class="snowflake"></div>
-    <div class="snowflake"></div>
-    <div class="snowflake"></div>
-    <div class="snowflake"></div>
-    <div class="snowflake"></div>
-    <div class="snowflake"></div>
+    <!-- Snowflake Effect -->
+    <div class="snowflake" style="--size: 10px; --duration: 12s; --opacity: 0.7; --left: 10%;"></div>
+    <div class="snowflake" style="--size: 8px; --duration: 10s; --opacity: 0.8; --left: 20%;"></div>
+    <div class="snowflake" style="--size: 12px; --duration: 14s; --opacity: 0.5; --left: 30%;"></div>
+    <div class="snowflake" style="--size: 7px; --duration: 11s; --opacity: 0.9; --left: 40%;"></div>
+    <div class="snowflake" style="--size: 9px; --duration: 9s; --opacity: 0.6; --left: 50%;"></div>
+    <div class="snowflake" style="--size: 10px; --duration: 13s; --opacity: 0.7; --left: 60%;"></div>
+    <div class="snowflake" style="--size: 6px; --duration: 12s; --opacity: 0.5; --left: 70%;"></div>
+    <div class="snowflake" style="--size: 11px; --duration: 10s; --opacity: 0.8; --left: 80%;"></div>
+    <div class="snowflake" style="--size: 13px; --duration: 14s; --opacity: 0.6; --left: 90%;"></div>
 
     <!-- Header and Description -->
     <header>
@@ -211,8 +220,8 @@
                     <h3>Rain Sensor</h3>
                     <div class="sensor-info">
                         <p><strong>Measures:</strong> Detects the presence of rain</p>
-                        <p><strong>Uses:</strong> Monitors water presence, useful in irrigation systems, car windshields, and weather stations.</p>
-                        <p><strong>Applications:</strong> Commonly used in smart irrigation, rainwater harvesting systems, and weather stations.</p>
+                        <p><strong>Uses:</strong> Indicates rainfall and can trigger events like closing windows or adjusting irrigation systems.</p>
+                        <p><strong>Applications:</strong> Used in weather stations, smart homes, and agriculture.</p>
                     </div>
                 </div>
 
@@ -221,23 +230,19 @@
                     <h3>DHT11</h3>
                     <div class="sensor-info">
                         <p><strong>Measures:</strong> Temperature and humidity</p>
-                        <p><strong>Uses:</strong> Monitors local climate conditions and provides accurate readings for home automation systems.</p>
-                        <p><strong>Applications:</strong> Used in HVAC systems, greenhouses, weather stations, and data loggers.</p>
+                        <p><strong>Uses:</strong> Monitors environmental conditions.</p>
+                        <p><strong>Applications:</strong> Commonly used in home automation systems, greenhouses, and HVAC systems.</p>
                     </div>
                 </div>
             </div>
         </section>
     </div>
 
-    <!-- External Scripts -->
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            const apiKey = 'e963f78956adf27684d7861d3c9e2f1e'; // Replace with your OpenWeather API Key
-            const city = 'Bangalore'; // City to display weather for
-
-            // Update Time and Date
+            // Fetch and display current time and date
             function updateTime() {
-                const now = new Date();
+                var now = new Date();
                 document.getElementById('current-time').textContent = now.toLocaleTimeString();
                 document.getElementById('current-date').textContent = now.toLocaleDateString();
             }
@@ -245,7 +250,7 @@
 
             // Fetch Weather Data for Bangalore
             function fetchWeather() {
-                fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`)
+                fetch(`https://api.openweathermap.org/data/2.5/weather?q=Bangalore&appid=e963f78956adf27684d7861d3c9e2f1e&units=metric`)
                     .then(response => response.json())
                     .then(data => {
                         document.getElementById('temp').textContent = data.main.temp;
@@ -261,20 +266,6 @@
             }
 
             fetchWeather();
-        });
-
-        // Circle Snowflake Creation Logic
-        function random(min, max) {
-            return Math.random() * (max - min) + min;
-        }
-
-        const snowflakes = document.querySelectorAll('.snowflake');
-        snowflakes.forEach(snowflake => {
-            snowflake.style.setProperty('--size', `${random(5, 12)}px`);
-            snowflake.style.setProperty('--duration', `${random(8, 15)}s`);
-            snowflake.style.setProperty('--opacity', random(0.3, 0.8));
-            snowflake.style.setProperty('--left', `${random(0, 100)}%`);
-            snowflake.style.setProperty('--direction', `${random(-0.5, 0.5)}`);
         });
     </script>
 
