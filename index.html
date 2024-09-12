@@ -21,6 +21,7 @@
             overflow: auto;
             height: 100vh;
             margin: 0;
+            position: relative;
         }
 
         @keyframes snowfall {
@@ -52,16 +53,29 @@
         }
 
         /* Add more snowflakes */
-        .snowflake:nth-child(1) { left: 5%; }
-        .snowflake:nth-child(2) { left: 15%; }
-        .snowflake:nth-child(3) { left: 25%; }
-        .snowflake:nth-child(4) { left: 35%; }
-        .snowflake:nth-child(5) { left: 45%; }
-        .snowflake:nth-child(6) { left: 55%; }
-        .snowflake:nth-child(7) { left: 65%; }
-        .snowflake:nth-child(8) { left: 75%; }
-        .snowflake:nth-child(9) { left: 85%; }
-        .snowflake:nth-child(10) { left: 95%; }
+        .snowflake:nth-child(1) { left: 2%; }
+        .snowflake:nth-child(2) { left: 5%; }
+        .snowflake:nth-child(3) { left: 8%; }
+        .snowflake:nth-child(4) { left: 12%; }
+        .snowflake:nth-child(5) { left: 15%; }
+        .snowflake:nth-child(6) { left: 18%; }
+        .snowflake:nth-child(7) { left: 20%; }
+        .snowflake:nth-child(8) { left: 25%; }
+        .snowflake:nth-child(9) { left: 30%; }
+        .snowflake:nth-child(10) { left: 35%; }
+        .snowflake:nth-child(11) { left: 40%; }
+        .snowflake:nth-child(12) { left: 45%; }
+        .snowflake:nth-child(13) { left: 50%; }
+        .snowflake:nth-child(14) { left: 55%; }
+        .snowflake:nth-child(15) { left: 60%; }
+        .snowflake:nth-child(16) { left: 65%; }
+        .snowflake:nth-child(17) { left: 70%; }
+        .snowflake:nth-child(18) { left: 75%; }
+        .snowflake:nth-child(19) { left: 80%; }
+        .snowflake:nth-child(20) { left: 85%; }
+        .snowflake:nth-child(21) { left: 90%; }
+        .snowflake:nth-child(22) { left: 95%; }
+        .snowflake:nth-child(23) { left: 97%; }
 
         header {
             text-align: center;
@@ -180,6 +194,17 @@
     <div class="snowflake">❅</div>
     <div class="snowflake">❆</div>
     <div class="snowflake">❄</div>
+    <div class="snowflake">❅</div>
+    <div class="snowflake">❆</div>
+    <div class="snowflake">❄</div>
+    <div class="snowflake">❅</div>
+    <div class="snowflake">❆</div>
+    <div class="snowflake">❄</div>
+    <div class="snowflake">❅</div>
+    <div class="snowflake">❆</div>
+    <div class="snowflake">❄</div>
+    <div class="snowflake">❅</div>
+    <div class="snowflake">❆</div>
 
     <!-- Header and Description -->
     <header>
@@ -235,8 +260,8 @@
 
     <!-- External Scripts -->
     <script>
-        document.addEventListener('e963f78956adf27684d7861d3c9e2f1e', function () {
-            const apiKey = 'YOUR_OPENWEATHER_API_KEY'; // Replace with your OpenWeather API Key
+        document.addEventListener('DOMContentLoaded', function () {
+            const apiKey = 'e963f78956adf27684d7861d3c9e2f1e'; // Replace with your OpenWeather API Key
             const city = 'Bangalore'; // City to display weather for
 
             // Update Time and Date
