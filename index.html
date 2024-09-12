@@ -1,72 +1,171 @@
-#include <Wire.h>
-#include <Adafruit_GFX.h>
-#include <Adafruit_SSD1306.h>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Monitoring Station</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        /* General Page Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #0d1117;
+            color: white;
+            margin: 0;
+            padding: 0;
+        }
 
-#define SCREEN_WIDTH 128 // OLED display width, in pixels
-#define SCREEN_HEIGHT 64 // OLED display height, in pixels
+        .header {
+            text-align: center;
+            padding: 20px;
+            background-color: #161b22;
+            color: #58a6ff;
+            border-bottom: 3px solid #58a6ff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+        }
 
-// Declaration for an SSD1306 display connected to I2C (SDA, SCL pins)
-Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1);
+        h1 {
+            margin: 0;
+        }
 
-// Function to draw more snowflakes
-void drawSnowflakes() {
-  for (int i = 0; i < 20; i++) { // Add 20 snowflakes
-    int x = random(0, display.width());
-    int y = random(0, display.height());
-    display.drawPixel(x, y, WHITE);
-  }
-}
+        h2 {
+            text-align: center;
+            margin-top: 40px;
+            color: #58a6ff;
+        }
 
-// Function to center-align the text
-void displayCenteredText(String text, int yPos) {
-  int textWidth = text.length() * 6; // Assuming each character is 6 pixels wide
-  int centerX = (display.width() - textWidth) / 2;
-  display.setCursor(centerX, yPos);
-  display.print(text);
-}
+        .content {
+            padding: 20px;
+        }
 
-// Function to right-align the text
-void displayRightAlignedText(String text, int yPos) {
-  int textWidth = text.length() * 6; // Assuming each character is 6 pixels wide
-  int rightX = display.width() - textWidth;
-  display.setCursor(rightX, yPos);
-  display.print(text);
-}
+        /* Astro Section */
+        .astro-section {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 50px 0;
+        }
 
-// Function to display data with alignment
-void displayData() {
-  display.clearDisplay(); // Clear the display first
-  
-  // Draw snowflakes
-  drawSnowflakes();
+        .astro-card {
+            background-color: #1A1A1A;
+            color: white;
+            padding: 20px;
+            margin: 10px;
+            border-radius: 10px;
+            width: 220px;
+            text-align: center;
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+            border: 2px solid transparent;
+        }
 
-  // Display temperature (center aligned)
-  String temp = "Temp: 24C";
-  displayCenteredText(temp, 10);
+        .astro-card:hover {
+            transform: scale(1.1);
+            border-color: #58a6ff;
+            box-shadow: 0 0 20px #58a6ff;
+            animation: pulse 1.5s infinite;
+        }
 
-  // Display humidity (right aligned)
-  String humidity = "Humidity: 60%";
-  displayRightAlignedText(humidity, 30);
+        .astro-card h4 {
+            margin: 10px 0;
+            font-size: 1.4rem;
+            color: #58a6ff;
+        }
 
-  // Display air pressure (left aligned as an example)
-  display.setCursor(0, 50);
-  display.print("Pressure: 1012 hPa");
+        /* Animation for pulse effect */
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 20px rgba(88, 166, 255, 0.5);
+            }
+            50% {
+                box-shadow: 0 0 40px rgba(88, 166, 255, 0.7);
+            }
+            100% {
+                box-shadow: 0 0 20px rgba(88, 166, 255, 0.5);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Weather Monitoring Station</h1>
+        <p>Dynamic weather updates with sunrise, sunset, and moon phases for Bangalore</p>
+    </div>
 
-  // Show everything on the display
-  display.display();
-}
+    <div class="content">
+        <!-- Sunrise, Sunset, and Moon Phases Section -->
+        <h2>Sunrise, Sunset & Moon Phases</h2>
+        <div class="astro-section">
+            <div class="astro-card">
+                <h4>Weather</h4>
+                <p id="weather-info">Loading...</p>
+            </div>
 
-void setup() {
-  // Initialize the OLED display
-  if (!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {
-    Serial.println(F("SSD1306 allocation failed"));
-    for (;;); // Don't proceed, loop forever
-  }
-  
-  display.clearDisplay(); // Clear the display buffer
-}
+            <div class="astro-card">
+                <h4>Sunrise</h4>
+                <p id="sunrise">Loading...</p>
+            </div>
 
-void loop() {
-  displayData(); // Call function to display the data
-  delay(2000);   // Delay before refreshing the screen
-}
+            <div class="astro-card">
+                <h4>Sunset</h4>
+                <p id="sunset">Loading...</p>
+            </div>
+
+            <div class="astro-card">
+                <h4>Moon Phase</h4>
+                <p id="moon-phase">Loading...</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const weatherApiKey = 'YOUR_OPENWEATHERMAP_API_KEY';
+        const city = 'Bangalore';
+        const lat = '12.9716';
+        const lon = '77.5946';
+
+        // Fetch weather data
+        async function fetchWeatherData() {
+            try {
+                const weatherResponse = await fetch(https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${weatherApiKey}&units=metric);
+                const weatherData = await weatherResponse.json();
+                document.getElementById('weather-info').textContent = Temperature: ${weatherData.main.temp}°C, Weather: ${weatherData.weather[0].description};
+            } catch (error) {
+                console.error('Error fetching weather data:', error);
+                document.getElementById('weather-info').textContent = 'Error loading data';
+            }
+        }
+
+        // Fetch sunrise and sunset times
+        async function fetchSunData() {
+            try {
+                const sunResponse = await fetch(https://api.sunrise-sunset.org/json?lat=${lat}&lng=${lon});
+                const sunData = await sunResponse.json();
+                document.getElementById('sunrise').textContent = Sunrise: ${sunData.results.sunrise};
+                document.getElementById('sunset').textContent = Sunset: ${sunData.results.sunset};
+            } catch (error) {
+                console.error('Error fetching sunrise/sunset data:', error);
+                document.getElementById('sunrise').textContent = 'Error loading data';
+                document.getElementById('sunset').textContent = 'Error loading data';
+            }
+        }
+
+        // Fetch moon phase
+        async function fetchMoonPhase() {
+            try {
+                const moonResponse = await fetch(https://api.le-systeme-solaire.net/rest/bodies/moon);
+                const moonData = await moonResponse.json();
+                document.getElementById('moon-phase').textContent = Moon Phase: ${moonData.moonPhase};
+            } catch (error) {
+                console.error('Error fetching moon phase data:', error);
+                document.getElementById('moon-phase').textContent = 'Error loading data';
+            }
+        }
+
+        // Call the functions to display data
+        fetchWeatherData();
+        fetchSunData();
+        fetchMoonPhase();
+    </script>
+</body>
+</html>
