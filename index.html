@@ -82,6 +82,53 @@
             color: #fff;
         }
 
+        .sensor-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .sensor-box {
+            background: rgba(33, 33, 33, 0.9);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            width: 150px;
+            height: 150px;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+            color: #a0a0a0;
+        }
+
+        .sensor-box:hover {
+            border: 2px solid #3498db;
+            box-shadow: 0 0 15px rgba(52, 152, 219, 0.8);
+            color: #ffffff;
+        }
+
+        .sensor-info {
+            display: none;
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #3498db;
+            color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            width: 250px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+
+        .sensor-box:hover .sensor-info {
+            display: block;
+        }
+
         h2 {
             font-size: 24px;
             margin-bottom: 10px;
@@ -141,6 +188,28 @@
                 <p>Wind Speed: <span id="wind-speed">Loading...</span> m/s</p>
                 <p>Visibility: <span id="visibility">Loading...</span> meters</p>
                 <p>Weather Conditions: <span id="weather-condition">Loading...</span></p>
+            </div>
+        </section>
+
+        <!-- Sensor Boxes -->
+        <section id="sensors">
+            <div class="sensor-container">
+                <div class="sensor-box">
+                    <h3>BMP180</h3>
+                    <div class="sensor-info">The BMP180 sensor measures atmospheric pressure and temperature, helping to predict weather changes.</div>
+                </div>
+                <div class="sensor-box">
+                    <h3>MQ135</h3>
+                    <div class="sensor-info">MQ135 detects air quality by measuring the presence of harmful gases like CO2, ammonia, and benzene.</div>
+                </div>
+                <div class="sensor-box">
+                    <h3>Rain Sensor</h3>
+                    <div class="sensor-info">The rain sensor detects the presence of water, useful for monitoring rainfall or water presence in an area.</div>
+                </div>
+                <div class="sensor-box">
+                    <h3>DHT11</h3>
+                    <div class="sensor-info">The DHT11 sensor measures temperature and humidity for local climate tracking in your environment.</div>
+                </div>
             </div>
         </section>
     </div>
