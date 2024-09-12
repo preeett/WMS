@@ -23,15 +23,6 @@
             min-height: 100vh;
         }
 
-        @keyframes snowfall {
-            0% {
-                transform: translateY(0) translateX(0);
-            }
-            100% {
-                transform: translateY(100vh) translateX(calc(-50vw + 100vw * var(--direction)));
-            }
-        }
-
         .snowflake {
             position: absolute;
             top: -10px;
@@ -81,10 +72,6 @@
             text-align: center;
         }
 
-        .weather-info {
-            color: #fff;
-        }
-
         .sensor-container {
             display: flex;
             justify-content: center;
@@ -111,6 +98,7 @@
             border: 2px solid #3498db;
             box-shadow: 0 0 15px rgba(52, 152, 219, 0.8);
             color: #ffffff;
+            transform: scale(1.05);
         }
 
         .sensor-info {
@@ -126,6 +114,7 @@
             width: 250px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
             z-index: 1;
+            text-align: left;
         }
 
         .sensor-box:hover .sensor-info {
@@ -165,7 +154,7 @@
     <!-- Header and Description -->
     <header>
         <h1>Weather Monitoring Station</h1>
-        <p class="description">A weather monitoring station is a device that collects data related to the atmosphere, temperature, humidity, and more. It helps track weather patterns, pressure systems, and air quality, providing insights into various physical phenomena such as heat transfer and fluid dynamics.</p>
+        <p class="description">A weather monitoring station collects data related to the atmosphere, temperature, humidity, and more. It helps track weather patterns, pressure systems, and air quality, providing insights into various physical phenomena.</p>
     </header>
 
     <!-- Main Content -->
@@ -197,21 +186,44 @@
         <!-- Sensor Boxes -->
         <section id="sensors">
             <div class="sensor-container">
+                <!-- BMP180 Sensor -->
                 <div class="sensor-box">
                     <h3>BMP180</h3>
-                    <div class="sensor-info">The BMP180 sensor measures atmospheric pressure and temperature, helping to predict weather changes.</div>
+                    <div class="sensor-info">
+                        <p><strong>Measures:</strong> Atmospheric pressure and temperature</p>
+                        <p><strong>Uses:</strong> Predicts weather changes and helps with altitude measurement.</p>
+                        <p><strong>Applications:</strong> Often used in weather forecasting, altitude measurement, and drones.</p>
+                    </div>
                 </div>
+                
+                <!-- MQ135 Sensor -->
                 <div class="sensor-box">
                     <h3>MQ135</h3>
-                    <div class="sensor-info">MQ135 detects air quality by measuring the presence of harmful gases like CO2, ammonia, and benzene.</div>
+                    <div class="sensor-info">
+                        <p><strong>Measures:</strong> Air quality by detecting harmful gases</p>
+                        <p><strong>Uses:</strong> Detects gases like CO2, ammonia, benzene, and smoke.</p>
+                        <p><strong>Applications:</strong> Used in air quality monitoring systems, industrial safety, and pollution control.</p>
+                    </div>
                 </div>
+
+                <!-- Rain Sensor -->
                 <div class="sensor-box">
                     <h3>Rain Sensor</h3>
-                    <div class="sensor-info">The rain sensor detects the presence of water, useful for monitoring rainfall or water presence in an area.</div>
+                    <div class="sensor-info">
+                        <p><strong>Measures:</strong> Detects the presence of rain</p>
+                        <p><strong>Uses:</strong> Monitors water presence, useful in irrigation systems, car windshields, and weather stations.</p>
+                        <p><strong>Applications:</strong> Commonly used in smart irrigation, rainwater harvesting systems, and weather stations.</p>
+                    </div>
                 </div>
+
+                <!-- DHT11 Sensor -->
                 <div class="sensor-box">
                     <h3>DHT11</h3>
-                    <div class="sensor-info">The DHT11 sensor measures temperature and humidity for local climate tracking in your environment.</div>
+                    <div class="sensor-info">
+                        <p><strong>Measures:</strong> Temperature and humidity</p>
+                        <p><strong>Uses:</strong> Monitors local climate conditions and provides accurate readings for home automation systems.</p>
+                        <p><strong>Applications:</strong> Used in HVAC systems, greenhouses, weather stations, and data loggers.</p>
+                    </div>
                 </div>
             </div>
         </section>
