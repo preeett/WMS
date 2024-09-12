@@ -18,7 +18,7 @@
             background-color: #000; /* Black background */
             color: #fff;
             padding: 20px;
-            overflow: auto;
+            overflow: hidden; /* Prevent scroll bars */
             height: 100vh;
             margin: 0;
             position: relative;
@@ -29,53 +29,24 @@
                 transform: translateY(0) translateX(0);
             }
             100% {
-                transform: translateY(100vh) translateX(100vw);
+                transform: translateY(100vh) translateX(calc(-50vw + 100vw * var(--direction)));
             }
         }
 
         .snowflake {
             position: absolute;
             top: -10px;
-            font-size: 0.7em;
+            font-size: var(--size);
             color: #fff;
-            animation: snowfall 10s linear infinite;
-            opacity: 0.8;
-        }
-
-        .snowflake:nth-child(odd) {
-            font-size: 0.5em;
-            animation-duration: 15s;
-            opacity: 0.6;
-        }
-
-        .snowflake:nth-child(even) {
-            animation-duration: 12s;
+            animation: snowfall var(--duration) linear infinite;
+            opacity: var(--opacity);
+            left: var(--left);
         }
 
         /* Add more snowflakes */
-        .snowflake:nth-child(1) { left: 2%; }
-        .snowflake:nth-child(2) { left: 5%; }
-        .snowflake:nth-child(3) { left: 8%; }
-        .snowflake:nth-child(4) { left: 12%; }
-        .snowflake:nth-child(5) { left: 15%; }
-        .snowflake:nth-child(6) { left: 18%; }
-        .snowflake:nth-child(7) { left: 20%; }
-        .snowflake:nth-child(8) { left: 25%; }
-        .snowflake:nth-child(9) { left: 30%; }
-        .snowflake:nth-child(10) { left: 35%; }
-        .snowflake:nth-child(11) { left: 40%; }
-        .snowflake:nth-child(12) { left: 45%; }
-        .snowflake:nth-child(13) { left: 50%; }
-        .snowflake:nth-child(14) { left: 55%; }
-        .snowflake:nth-child(15) { left: 60%; }
-        .snowflake:nth-child(16) { left: 65%; }
-        .snowflake:nth-child(17) { left: 70%; }
-        .snowflake:nth-child(18) { left: 75%; }
-        .snowflake:nth-child(19) { left: 80%; }
-        .snowflake:nth-child(20) { left: 85%; }
-        .snowflake:nth-child(21) { left: 90%; }
-        .snowflake:nth-child(22) { left: 95%; }
-        .snowflake:nth-child(23) { left: 97%; }
+        .snowflake:nth-child(odd) {
+            --direction: calc((random() - 0.5) * 2);
+        }
 
         header {
             text-align: center;
@@ -287,6 +258,20 @@
             }
 
             fetchWeather();
+        });
+
+        // Snowflake Creation Logic
+        function random(min, max) {
+            return Math.random() * (max - min) + min;
+        }
+
+        const snowflakes = document.querySelectorAll('.snowflake');
+        snowflakes.forEach(snowflake => {
+            snowflake.style.setProperty('--size', `${random(0.5, 1.2)}em`);
+            snowflake.style.setProperty('--duration', `${random(8, 15)}s`);
+            snowflake.style.setProperty('--opacity', random(0.3, 0.8));
+            snowflake.style.setProperty('--left', `${random(0, 100)}%`);
+            snowflake.style.setProperty('--direction', `${random(-0.5, 0.5)}`);
         });
     </script>
 
