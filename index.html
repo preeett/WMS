@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -35,8 +35,11 @@
         .snowflake {
             position: absolute;
             top: -10px;
-            font-size: var(--size);
-            color: #fff;
+            width: var(--size);
+            height: var(--size);
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            box-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
             animation: snowfall var(--duration) linear infinite;
             opacity: var(--opacity);
             left: var(--left);
@@ -148,16 +151,16 @@
 </head>
 <body>
 
-    <!-- Snowfall Effect -->
-    <div class="snowflake">❄</div>
-    <div class="snowflake">❅</div>
-    <div class="snowflake">❆</div>
-    <div class="snowflake">❄</div>
-    <div class="snowflake">❅</div>
-    <div class="snowflake">❆</div>
-    <div class="snowflake">❄</div>
-    <div class="snowflake">❅</div>
-    <div class="snowflake">❆</div>
+    <!-- Snowflake Effect (Solid Circles) -->
+    <div class="snowflake"></div>
+    <div class="snowflake"></div>
+    <div class="snowflake"></div>
+    <div class="snowflake"></div>
+    <div class="snowflake"></div>
+    <div class="snowflake"></div>
+    <div class="snowflake"></div>
+    <div class="snowflake"></div>
+    <div class="snowflake"></div>
 
     <!-- Header and Description -->
     <header>
@@ -248,14 +251,14 @@
             fetchWeather();
         });
 
-        // Snowflake Creation Logic
+        // Circle Snowflake Creation Logic
         function random(min, max) {
             return Math.random() * (max - min) + min;
         }
 
         const snowflakes = document.querySelectorAll('.snowflake');
         snowflakes.forEach(snowflake => {
-            snowflake.style.setProperty('--size', `${random(0.5, 1.2)}em`);
+            snowflake.style.setProperty('--size', `${random(5, 12)}px`);
             snowflake.style.setProperty('--duration', `${random(8, 15)}s`);
             snowflake.style.setProperty('--opacity', random(0.3, 0.8));
             snowflake.style.setProperty('--left', `${random(0, 100)}%`);
