@@ -242,9 +242,6 @@
     </div>
 
     <script>
-  document.addEventListener('DOMContentLoaded', function () {
-            const apiKey = 'e963f78956adf27684d7861d3c9e2f1e'; // Replace with your OpenWeather API Key
-            const city = 'Bangalore'; // City to display weather for
         document.addEventListener('DOMContentLoaded', function () {
             // Fetch and display current time and date
             function updateTime() {
@@ -256,7 +253,7 @@
 
             // Fetch Weather Data for Bangalore
             function fetchWeather() {
-                fetch(`https://api.openweathermap.org/data/2.5/weather?q=Bangalore&appid=YOUR_API_KEY&units=metric`)
+                fetch(`https://api.openweathermap.org/data/2.5/weather?q=Bangalore&appid=e963f78956adf27684d7861d3c9e2f1e&units=metric`)
                     .then(response => response.json())
                     .then(data => {
                         document.getElementById('temp').textContent = data.main.temp;
