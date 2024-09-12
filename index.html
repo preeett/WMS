@@ -15,7 +15,7 @@
 
         body {
             font-family: 'Montserrat', sans-serif;
-            background-color: black;
+            background-color: #1c1c1c;
             color: #fff;
             padding: 20px;
             overflow: auto; /* Allow scrolling */
@@ -77,18 +77,18 @@
         }
 
         section {
-            margin: 20px;
+            margin: 20px auto;
             padding: 20px;
             border-radius: 12px;
             box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
             width: calc(100% - 40px);
             max-width: 800px;
             background: rgba(255, 255, 255, 0.1);
+            text-align: center; /* Center the content */
         }
 
         .weather-info {
             color: #fff;
-            text-align: center;
         }
 
         .sensor-container {
@@ -100,7 +100,7 @@
         }
 
         .sensor-box {
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(33, 33, 33, 0.9);
             padding: 20px;
             border-radius: 12px;
             text-align: center;
@@ -109,12 +109,14 @@
             cursor: pointer;
             position: relative;
             transition: all 0.3s ease;
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 5px rgba(52, 152, 219, 0.5); /* Reduced blur effect */
+            color: #a0a0a0; /* Dark theme box color */
         }
 
         .sensor-box:hover {
             border: 2px solid #3498db;
-            box-shadow: 0 0 20px rgba(52, 152, 219, 0.8);
+            box-shadow: 0 0 15px rgba(52, 152, 219, 0.8);
+            color: #ffffff; /* Change text color on hover */
         }
 
         .sensor-info {
@@ -139,7 +141,6 @@
         h2 {
             font-size: 24px;
             margin-bottom: 10px;
-            text-align: center;
         }
 
         p {
