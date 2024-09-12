@@ -4,168 +4,248 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weather Monitoring Station</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        /* General Page Styles */
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #0d1117;
-            color: white;
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
         }
 
-        .header {
-            text-align: center;
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: black;
+            color: #fff;
             padding: 20px;
-            background-color: #161b22;
-            color: #58a6ff;
-            border-bottom: 3px solid #58a6ff;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+            overflow: auto; /* Allow scrolling */
+            height: 100vh;
+            margin: 0;
+        }
+
+        @keyframes snowfall {
+            0% {
+                transform: translateY(0) translateX(0);
+            }
+            100% {
+                transform: translateY(100vh) translateX(100vw);
+            }
+        }
+
+        .snowflake {
+            position: absolute;
+            top: -10px;
+            font-size: 0.7em;
+            color: #fff;
+            animation: snowfall 10s linear infinite;
+            opacity: 0.8;
+        }
+
+        .snowflake:nth-child(odd) {
+            font-size: 0.5em;
+            animation-duration: 15s;
+            opacity: 0.6;
+        }
+
+        .snowflake:nth-child(even) {
+            animation-duration: 12s;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
         }
 
         h1 {
-            margin: 0;
+            font-size: 48px;
+            font-weight: bold;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+            margin-bottom: 20px;
+        }
+
+        .description {
+            font-size: 20px;
+            margin-top: 10px;
+            margin-bottom: 40px;
+            max-width: 800px;
+            text-align: center;
+            line-height: 1.6;
+            color: #f7f7f7;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        section {
+            margin: 20px;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+            width: calc(100% - 40px);
+            max-width: 800px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .weather-info {
+            color: #fff;
+            text-align: center;
+        }
+
+        .sensor-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .sensor-box {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            width: 150px;
+            height: 150px;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+        }
+
+        .sensor-box:hover {
+            border: 2px solid #3498db;
+            box-shadow: 0 0 20px rgba(52, 152, 219, 0.8);
+        }
+
+        .sensor-info {
+            display: none;
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #3498db;
+            color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            width: 250px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+
+        .sensor-box:hover .sensor-info {
+            display: block;
         }
 
         h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
             text-align: center;
-            margin-top: 40px;
-            color: #58a6ff;
         }
 
-        .content {
-            padding: 20px;
+        p {
+            font-size: 18px;
+            margin: 5px 0;
         }
 
-        /* Astro Section */
-        .astro-section {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            margin: 50px 0;
-        }
-
-        .astro-card {
-            background-color: #1A1A1A;
-            color: white;
-            padding: 20px;
-            margin: 10px;
-            border-radius: 10px;
-            width: 220px;
-            text-align: center;
-            transition: all 0.3s ease-in-out;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
-            border: 2px solid transparent;
-        }
-
-        .astro-card:hover {
-            transform: scale(1.1);
-            border-color: #58a6ff;
-            box-shadow: 0 0 20px #58a6ff;
-            animation: pulse 1.5s infinite;
-        }
-
-        .astro-card h4 {
-            margin: 10px 0;
-            font-size: 1.4rem;
-            color: #58a6ff;
-        }
-
-        /* Animation for pulse effect */
-        @keyframes pulse {
-            0% {
-                box-shadow: 0 0 20px rgba(88, 166, 255, 0.5);
-            }
-            50% {
-                box-shadow: 0 0 40px rgba(88, 166, 255, 0.7);
-            }
-            100% {
-                box-shadow: 0 0 20px rgba(88, 166, 255, 0.5);
-            }
+        #map {
+            width: 100%;
+            height: 300px;
+            background-color: #eaeaea;
         }
     </style>
 </head>
 <body>
-    <div class="header">
+
+    <!-- Snowfall Effect -->
+    <div class="snowflake" style="left: 10%; animation-delay: 0s;">❄</div>
+    <div class="snowflake" style="left: 30%; animation-delay: 2s;">❅</div>
+    <div class="snowflake" style="left: 50%; animation-delay: 4s;">❆</div>
+    <div class="snowflake" style="left: 70%; animation-delay: 6s;">❄</div>
+    <div class="snowflake" style="left: 90%; animation-delay: 8s;">❅</div>
+
+    <!-- Header and Description -->
+    <header>
         <h1>Weather Monitoring Station</h1>
-        <p>Dynamic weather updates with sunrise, sunset, and moon phases for Bangalore</p>
-    </div>
+        <p class="description">A weather monitoring station is a device that collects data related to the atmosphere, temperature, humidity, and more. It is especially useful in physics, where students can study weather patterns, pressure systems, and air quality. Monitoring atmospheric conditions is critical in understanding various physical phenomena such as heat transfer, fluid dynamics, and gas laws.</p>
+    </header>
 
+    <!-- Main Content -->
     <div class="content">
-        <!-- Sunrise, Sunset, and Moon Phases Section -->
-        <h2>Sunrise, Sunset & Moon Phases</h2>
-        <div class="astro-section">
-            <div class="astro-card">
-                <h4>Weather</h4>
-                <p id="weather-info">Loading...</p>
+        <!-- Screen 1: Date, Time, and Day -->
+        <section id="screen1">
+            <div class="weather-info">
+                <h2>Current Time and Date</h2>
+                <p id="current-time"></p>
+                <p id="current-date"></p>
             </div>
+        </section>
 
-            <div class="astro-card">
-                <h4>Sunrise</h4>
-                <p id="sunrise">Loading...</p>
+        <!-- Screen 2: Current Weather -->
+        <section id="screen2">
+            <div class="weather-info">
+                <h2>Current Weather in Bangalore</h2>
+                <p>Temperature: <span id="temp">Loading...</span> °C</p>
+                <p>Humidity: <span id="humidity">Loading...</span> %</p>
+                <p>Pressure: <span id="pressure">Loading...</span> hPa</p>
+                <p>Sunrise: <span id="sunrise">Loading...</span></p>
+                <p>Sunset: <span id="sunset">Loading...</span></p>
             </div>
+        </section>
 
-            <div class="astro-card">
-                <h4>Sunset</h4>
-                <p id="sunset">Loading...</p>
+        <!-- Sensor Boxes at the Bottom -->
+        <section id="sensors">
+            <div class="sensor-container">
+                <div class="sensor-box">
+                    <h3>BMP 180</h3>
+                    <div class="sensor-info">BMP 180 measures atmospheric pressure, helpful for predicting weather changes.</div>
+                </div>
+                <div class="sensor-box">
+                    <h3>MQ 135</h3>
+                    <div class="sensor-info">MQ 135 detects air quality by measuring harmful gases like CO2 and ammonia.</div>
+                </div>
+                <div class="sensor-box">
+                    <h3>Rain Sensor</h3>
+                    <div class="sensor-info">Detects the presence of water and is useful for monitoring rainfall levels.</div>
+                </div>
+                <div class="sensor-box">
+                    <h3>DHT11</h3>
+                    <div class="sensor-info">DHT11 measures temperature and humidity for local climate tracking.</div>
+                </div>
             </div>
-
-            <div class="astro-card">
-                <h4>Moon Phase</h4>
-                <p id="moon-phase">Loading...</p>
-            </div>
-        </div>
+        </section>
     </div>
 
+    <!-- External Scripts -->
     <script>
-        const weatherApiKey = 'YOUR_OPENWEATHERMAP_API_KEY';
-        const city = 'Bangalore';
-        const lat = '12.9716';
-        const lon = '77.5946';
+        document.addEventListener('DOMContentLoaded', function () {
+            const apiKey = 'YOUR_OPENWEATHER_API_KEY'; // Replace with your OpenWeather API Key
+            const city = 'Bangalore'; // City to display weather for
 
-        // Fetch weather data
-        async function fetchWeatherData() {
-            try {
-                const weatherResponse = await fetch(https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${weatherApiKey}&units=metric);
-                const weatherData = await weatherResponse.json();
-                document.getElementById('weather-info').textContent = Temperature: ${weatherData.main.temp}°C, Weather: ${weatherData.weather[0].description};
-            } catch (error) {
-                console.error('Error fetching weather data:', error);
-                document.getElementById('weather-info').textContent = 'Error loading data';
+            // Update Time and Date
+            function updateTime() {
+                const now = new Date();
+                document.getElementById('current-time').textContent = now.toLocaleTimeString();
+                document.getElementById('current-date').textContent = now.toLocaleDateString();
             }
-        }
+            setInterval(updateTime, 1000); // Update every second
 
-        // Fetch sunrise and sunset times
-        async function fetchSunData() {
-            try {
-                const sunResponse = await fetch(https://api.sunrise-sunset.org/json?lat=${lat}&lng=${lon});
-                const sunData = await sunResponse.json();
-                document.getElementById('sunrise').textContent = Sunrise: ${sunData.results.sunrise};
-                document.getElementById('sunset').textContent = Sunset: ${sunData.results.sunset};
-            } catch (error) {
-                console.error('Error fetching sunrise/sunset data:', error);
-                document.getElementById('sunrise').textContent = 'Error loading data';
-                document.getElementById('sunset').textContent = 'Error loading data';
+            // Fetch Weather Data for Bangalore
+            function fetchWeather() {
+                fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`)
+                    .then(response => response.json())
+                    .then(data => {
+                        document.getElementById('temp').textContent = data.main.temp;
+                        document.getElementById('humidity').textContent = data.main.humidity;
+                        document.getElementById('pressure').textContent = data.main.pressure;
+                        document.getElementById('sunrise').textContent = new Date(data.sys.sunrise * 1000).toLocaleTimeString();
+                        document.getElementById('sunset').textContent = new Date(data.sys.sunset * 1000).toLocaleTimeString();
+                    })
+                    .catch(error => console.log(error));
             }
-        }
 
-        // Fetch moon phase
-        async function fetchMoonPhase() {
-            try {
-                const moonResponse = await fetch(https://api.le-systeme-solaire.net/rest/bodies/moon);
-                const moonData = await moonResponse.json();
-                document.getElementById('moon-phase').textContent = Moon Phase: ${moonData.moonPhase};
-            } catch (error) {
-                console.error('Error fetching moon phase data:', error);
-                document.getElementById('moon-phase').textContent = 'Error loading data';
-            }
-        }
-
-        // Call the functions to display data
-        fetchWeatherData();
-        fetchSunData();
-        fetchMoonPhase();
+            fetchWeather();
+        });
     </script>
+
 </body>
 </html>
