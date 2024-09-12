@@ -15,10 +15,10 @@
 
         body {
             font-family: 'Montserrat', sans-serif;
-            background-color: #1c1c1c;
+            background-color: #000; /* Black background */
             color: #fff;
             padding: 20px;
-            overflow: auto; /* Allow scrolling */
+            overflow: auto;
             height: 100vh;
             margin: 0;
         }
@@ -50,6 +50,18 @@
         .snowflake:nth-child(even) {
             animation-duration: 12s;
         }
+
+        /* Add more snowflakes */
+        .snowflake:nth-child(1) { left: 5%; }
+        .snowflake:nth-child(2) { left: 15%; }
+        .snowflake:nth-child(3) { left: 25%; }
+        .snowflake:nth-child(4) { left: 35%; }
+        .snowflake:nth-child(5) { left: 45%; }
+        .snowflake:nth-child(6) { left: 55%; }
+        .snowflake:nth-child(7) { left: 65%; }
+        .snowflake:nth-child(8) { left: 75%; }
+        .snowflake:nth-child(9) { left: 85%; }
+        .snowflake:nth-child(10) { left: 95%; }
 
         header {
             text-align: center;
@@ -83,8 +95,8 @@
             box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
             width: calc(100% - 40px);
             max-width: 800px;
-            background: rgba(255, 255, 255, 0.1);
-            text-align: center; /* Center the content */
+            background: #1f2a44; /* Changed the color to dark blue */
+            text-align: center;
         }
 
         .weather-info {
@@ -110,13 +122,13 @@
             position: relative;
             transition: all 0.3s ease;
             box-shadow: 0 0 5px rgba(52, 152, 219, 0.5); /* Reduced blur effect */
-            color: #a0a0a0; /* Dark theme box color */
+            color: #a0a0a0;
         }
 
         .sensor-box:hover {
             border: 2px solid #3498db;
             box-shadow: 0 0 15px rgba(52, 152, 219, 0.8);
-            color: #ffffff; /* Change text color on hover */
+            color: #ffffff;
         }
 
         .sensor-info {
@@ -158,11 +170,16 @@
 <body>
 
     <!-- Snowfall Effect -->
-    <div class="snowflake" style="left: 10%; animation-delay: 0s;">❄</div>
-    <div class="snowflake" style="left: 30%; animation-delay: 2s;">❅</div>
-    <div class="snowflake" style="left: 50%; animation-delay: 4s;">❆</div>
-    <div class="snowflake" style="left: 70%; animation-delay: 6s;">❄</div>
-    <div class="snowflake" style="left: 90%; animation-delay: 8s;">❅</div>
+    <div class="snowflake">❄</div>
+    <div class="snowflake">❅</div>
+    <div class="snowflake">❆</div>
+    <div class="snowflake">❄</div>
+    <div class="snowflake">❅</div>
+    <div class="snowflake">❆</div>
+    <div class="snowflake">❄</div>
+    <div class="snowflake">❅</div>
+    <div class="snowflake">❆</div>
+    <div class="snowflake">❄</div>
 
     <!-- Header and Description -->
     <header>
