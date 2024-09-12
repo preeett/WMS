@@ -23,6 +23,7 @@
             min-height: 100vh;
         }
 
+        /* Snowflake styling and animation */
         .snowflake {
             position: absolute;
             top: -10px;
@@ -36,12 +37,13 @@
             left: var(--left);
         }
 
+        /* Adjusted snowfall animation to move at angles */
         @keyframes snowfall {
             0% {
-                transform: translateY(-50px);
+                transform: translate(var(--horizontal), -50px);
             }
             100% {
-                transform: translateY(100vh);
+                transform: translate(var(--horizontal-end), 100vh);
             }
         }
 
@@ -150,15 +152,16 @@
 <body>
 
     <!-- Snowflake Effect -->
-    <div class="snowflake" style="--size: 10px; --duration: 12s; --opacity: 0.7; --left: 10%;"></div>
-    <div class="snowflake" style="--size: 8px; --duration: 10s; --opacity: 0.8; --left: 20%;"></div>
-    <div class="snowflake" style="--size: 12px; --duration: 14s; --opacity: 0.5; --left: 30%;"></div>
-    <div class="snowflake" style="--size: 7px; --duration: 11s; --opacity: 0.9; --left: 40%;"></div>
-    <div class="snowflake" style="--size: 9px; --duration: 9s; --opacity: 0.6; --left: 50%;"></div>
-    <div class="snowflake" style="--size: 10px; --duration: 13s; --opacity: 0.7; --left: 60%;"></div>
-    <div class="snowflake" style="--size: 6px; --duration: 12s; --opacity: 0.5; --left: 70%;"></div>
-    <div class="snowflake" style="--size: 11px; --duration: 10s; --opacity: 0.8; --left: 80%;"></div>
-    <div class="snowflake" style="--size: 13px; --duration: 14s; --opacity: 0.6; --left: 90%;"></div>
+    <div class="snowflake" style="--size: 7px; --duration: 10s; --opacity: 0.8; --left: 5%; --horizontal: 0px; --horizontal-end: -20px;"></div>
+    <div class="snowflake" style="--size: 6px; --duration: 12s; --opacity: 0.6; --left: 15%; --horizontal: -10px; --horizontal-end: 20px;"></div>
+    <div class="snowflake" style="--size: 9px; --duration: 9s; --opacity: 0.7; --left: 25%; --horizontal: 0px; --horizontal-end: -30px;"></div>
+    <div class="snowflake" style="--size: 8px; --duration: 13s; --opacity: 0.5; --left: 35%; --horizontal: 10px; --horizontal-end: 40px;"></div>
+    <div class="snowflake" style="--size: 7px; --duration: 14s; --opacity: 0.9; --left: 45%; --horizontal: 0px; --horizontal-end: -10px;"></div>
+    <div class="snowflake" style="--size: 6px; --duration: 11s; --opacity: 0.6; --left: 55%; --horizontal: -5px; --horizontal-end: 15px;"></div>
+    <div class="snowflake" style="--size: 8px; --duration: 10s; --opacity: 0.7; --left: 65%; --horizontal: 10px; --horizontal-end: 25px;"></div>
+    <div class="snowflake" style="--size: 9px; --duration: 13s; --opacity: 0.8; --left: 75%; --horizontal: -15px; --horizontal-end: -25px;"></div>
+    <div class="snowflake" style="--size: 7px; --duration: 12s; --opacity: 0.5; --left: 85%; --horizontal: 20px; --horizontal-end: -20px;"></div>
+    <div class="snowflake" style="--size: 6px; --duration: 11s; --opacity: 0.7; --left: 95%; --horizontal: -10px; --horizontal-end: 10px;"></div>
 
     <!-- Header and Description -->
     <header>
@@ -199,19 +202,19 @@
                 <div class="sensor-box">
                     <h3>BMP180</h3>
                     <div class="sensor-info">
-                        <p><strong>Measures:</strong> Atmospheric pressure and temperature</p>
-                        <p><strong>Uses:</strong> Predicts weather changes and helps with altitude measurement.</p>
-                        <p><strong>Applications:</strong> Often used in weather forecasting, altitude measurement, and drones.</p>
+                        <p><strong>Measures:</strong> Atmospheric pressure</p>
+                        <p><strong>Uses:</strong> Determines altitude and weather forecasting.</p>
+                        <p><strong>Applications:</strong> Used in smartphones, drones, and weather stations.</p>
                     </div>
                 </div>
-                
+
                 <!-- MQ135 Sensor -->
                 <div class="sensor-box">
                     <h3>MQ135</h3>
                     <div class="sensor-info">
-                        <p><strong>Measures:</strong> Air quality by detecting harmful gases</p>
-                        <p><strong>Uses:</strong> Detects gases like CO2, ammonia, benzene, and smoke.</p>
-                        <p><strong>Applications:</strong> Used in air quality monitoring systems, industrial safety, and pollution control.</p>
+                        <p><strong>Measures:</strong> Air quality</p>
+                        <p><strong>Uses:</strong> Detects gases like ammonia, benzene, and alcohol.</p>
+                        <p><strong>Applications:</strong> Used in air quality monitoring systems, home safety systems, and environmental monitoring.</p>
                     </div>
                 </div>
 
@@ -250,7 +253,7 @@
 
             // Fetch Weather Data for Bangalore
             function fetchWeather() {
-                fetch(`https://api.openweathermap.org/data/2.5/weather?q=Bangalore&appid=e963f78956adf27684d7861d3c9e2f1e&units=metric`)
+                fetch(`https://api.openweathermap.org/data/2.5/weather?q=Bangalore&appid=YOUR_API_KEY&units=metric`)
                     .then(response => response.json())
                     .then(data => {
                         document.getElementById('temp').textContent = data.main.temp;
